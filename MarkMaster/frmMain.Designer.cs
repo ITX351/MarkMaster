@@ -29,11 +29,14 @@
         private void InitializeComponent()
         {
             btnCrawler = new Button();
+            btnSkills = new Button();
+            lblLoadingStatus = new Label();
+            btnImport = new Button();
             SuspendLayout();
             // 
             // btnCrawler
             // 
-            btnCrawler.Location = new Point(399, 167);
+            btnCrawler.Location = new Point(47, 60);
             btnCrawler.Name = "btnCrawler";
             btnCrawler.Size = new Size(191, 94);
             btnCrawler.TabIndex = 0;
@@ -41,19 +44,56 @@
             btnCrawler.UseVisualStyleBackColor = true;
             btnCrawler.Click += btnCrawler_Click;
             // 
+            // btnSkills
+            // 
+            btnSkills.Location = new Point(47, 170);
+            btnSkills.Name = "btnSkills";
+            btnSkills.Size = new Size(206, 85);
+            btnSkills.TabIndex = 1;
+            btnSkills.Text = "传承技能一览(&S)";
+            btnSkills.UseVisualStyleBackColor = true;
+            btnSkills.Click += btnSkills_Click;
+            // 
+            // lblLoadingStatus
+            // 
+            lblLoadingStatus.AutoSize = true;
+            lblLoadingStatus.Location = new Point(56, 27);
+            lblLoadingStatus.Name = "lblLoadingStatus";
+            lblLoadingStatus.Size = new Size(104, 17);
+            lblLoadingStatus.TabIndex = 2;
+            lblLoadingStatus.Text = "本地数据加载状况";
+            // 
+            // btnImport
+            // 
+            btnImport.Location = new Point(47, 276);
+            btnImport.Name = "btnImport";
+            btnImport.Size = new Size(170, 68);
+            btnImport.TabIndex = 3;
+            btnImport.Text = "用户数据导入(&I)";
+            btnImport.UseVisualStyleBackColor = true;
+            btnImport.Click += btnImport_Click;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnImport);
+            Controls.Add(lblLoadingStatus);
+            Controls.Add(btnSkills);
             Controls.Add(btnCrawler);
             Name = "frmMain";
             Text = "Form1";
+            Load += frmMain_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button btnCrawler;
+        private Button btnSkills;
+        private Label lblLoadingStatus;
+        private Button btnImport;
     }
 }

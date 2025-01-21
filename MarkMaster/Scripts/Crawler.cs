@@ -11,17 +11,17 @@ namespace MarkMaster.Scripts
 {
     public class Crawler
     {
-        private static readonly string domain_url = "https://wiki.biligame.com/";
-        private static readonly string skill_url = domain_url + "bjhl/%E6%8A%80%E8%83%BD%E5%9B%BE%E9%89%B4";
-        private static readonly string memory_url = domain_url + "bjhl/%E8%AE%B0%E5%BF%86%E7%83%99%E7%97%95%E7%AD%9B%E9%80%89";
-        private static readonly string npc_url = domain_url + "bjhl/%E5%90%8C%E8%B0%83%E8%80%85%E7%AD%9B%E9%80%89";
-        public const string ResourcesDirectory = "resources/";
-        public const string ImgDirectory = ResourcesDirectory + "img/";
-        private const string SkillsFileName = "skills.json";
-        private const string imgSrcDictionaryFileName = "dict_img2src.json";
-        private const string MemoriesFileName = "memories.json";
-        private const string NPCsFileName = "npcs.json";
-        const string skill_data_prefix = "刻印技能/";
+        private static readonly string domain_url = Constants.DomainUrl;
+        private static readonly string skill_url = Constants.SkillUrl;
+        private static readonly string memory_url = Constants.MemoryUrl;
+        private static readonly string npc_url = Constants.NpcUrl;
+        public const string ResourcesDirectory = Constants.ResourcesDirectory;
+        public const string ImgDirectory = Constants.ImgDirectory;
+        private const string SkillsFileName = Constants.SkillsFileName;
+        private const string imgSrcDictionaryFileName = Constants.ImgSrcDictionaryFileName;
+        private const string MemoriesFileName = Constants.MemoriesFileName;
+        private const string NPCsFileName = Constants.NpcsFileName;
+        const string skill_data_prefix = Constants.SkillDataPrefix;
 
         public Crawler()
         {
@@ -295,7 +295,7 @@ namespace MarkMaster.Scripts
                     foreach (var kvp in imgSrcDictionary)
                     {
                         var imgUrl = kvp.Value;
-                        var imgFileName = kvp.Key;
+                        var imgFileName = kvp.Key + ".png";
                         var imgFilePath = Path.Combine(Tools.GetAbsolutePath(ImgDirectory), imgFileName);
 
                         if (!File.Exists(imgFilePath))
