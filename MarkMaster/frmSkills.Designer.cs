@@ -39,6 +39,7 @@
             btnSave = new Button();
             btnRestore = new Button();
             btnStartEditing = new Button();
+            lblSeparator = new Label();
             SuspendLayout();
             // 
             // btnSkillType3
@@ -153,11 +154,21 @@
             btnStartEditing.UseVisualStyleBackColor = true;
             btnStartEditing.Click += btnStartEditing_Click;
             // 
+            // lblSeparator
+            // 
+            lblSeparator.BorderStyle = BorderStyle.Fixed3D;
+            lblSeparator.Location = new Point(84, 388);
+            lblSeparator.Name = "lblSeparator";
+            lblSeparator.Size = new Size(50, 3);
+            lblSeparator.TabIndex = 9;
+            lblSeparator.Visible = false;
+            // 
             // frmSkills
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(991, 801);
+            Controls.Add(lblSeparator);
             Controls.Add(txtSearch);
             Controls.Add(cboSkillLevelFilter);
             Controls.Add(cboSkillUpperTypeFilter);
@@ -190,5 +201,6 @@
         private Button btnSave;
         private Button btnRestore;
         private Button btnStartEditing;
+        private Label lblSeparator;
     }
 }

@@ -14,7 +14,7 @@ namespace MarkMaster.UserControls
 {
     public partial class usrctlMemory : UserControl
     {
-        private Memory _memory;
+        public Memory _memory;
         public usrctlMemory(Memory memory)
         {
             InitializeComponent();

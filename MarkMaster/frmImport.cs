@@ -23,6 +23,16 @@ namespace MarkMaster
             Close();
         }
 
+        private string NormalizeSkillName(string skillName)
+        {
+            return skillName.Replace("·", "").Replace("型", "").Replace("α", "alpha").Replace("β", "beta").Replace(" ", "").Replace("\t", "").ToLower();
+        }
+
+        public bool AreSkillNamesEqual(string skillName1, string skillName2)
+        {
+            return NormalizeSkillName(skillName1) == NormalizeSkillName(skillName2);
+        }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
             var skillNames = rchtxtSkillNames.Lines;
@@ -31,16 +41,17 @@ namespace MarkMaster
 
             foreach (var line in skillNames)
             {
-                var parts = line.Trim().Split(' ');
-                var skillName = parts[0];
+                var trimmedLine = line.Trim();
+                var skillName = trimmedLine;
                 int level = 3;
 
-                if (parts.Length > 1 && int.TryParse(parts[1], out int parsedLevel) && parsedLevel >= 0 && parsedLevel <= 3)
+                if (trimmedLine.Length > 1 && char.IsDigit(trimmedLine[^1]) && int.TryParse(trimmedLine[^1].ToString(), out int parsedLevel) && parsedLevel >= 0 && parsedLevel <= 3)
                 {
+                    skillName = trimmedLine.Substring(0, trimmedLine.Length - 1).Trim();
                     level = parsedLevel;
                 }
 
-                var skill = GlobalData.Instance.Skills.FirstOrDefault(s => s.SkillName == skillName);
+                var skill = GlobalData.Instance.Skills.FirstOrDefault(s => AreSkillNamesEqual(s.SkillName, skillName));
                 if (skill != null)
                 {
                     skill.SetLevel(level);
@@ -53,7 +64,7 @@ namespace MarkMaster
             }
 
             GlobalData.Instance.SaveUserData();
-            rchtxtSkillNames.Lines = [.. unmatchedSkillNames];
+            rchtxtSkillNames.Lines = unmatchedSkillNames.ToArray();
 
             MessageBox.Show($"成功导入的技能数量: {matchedCount}\n未成功匹配的技能数量: {unmatchedSkillNames.Count}", "导入结果", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

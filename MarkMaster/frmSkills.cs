@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MarkMaster.Models;
 using MarkMaster.Utils;
+using MarkMaster.UserControls;
 
 namespace MarkMaster
 {
@@ -18,6 +19,7 @@ namespace MarkMaster
         private int nowType = 0;
         private bool isEditing = false;
         private readonly List<Skill> selectedSkills;
+        private readonly List<List<Control>> skillMemoryControls = new List<List<Control>>();
 
         public frmSkills()
         {
@@ -85,14 +87,24 @@ namespace MarkMaster
                         {
                             selectedSkills.Remove(skill);
                             skillControl.BorderStyle = BorderStyle.None;
-                            //skillControl.Font = new Font(skillControl.Font, FontStyle.Regular);
+                            // 销毁与它相关的控件
+                            var memoryControls = skillMemoryControls.FirstOrDefault(mc => mc.First().Tag == skill);
+                            if (memoryControls != null)
+                            {
+                                foreach (var control in memoryControls)
+                                {
+                                    this.Controls.Remove(control);
+                                    control.Dispose();
+                                }
+                                skillMemoryControls.Remove(memoryControls);
+                            }
                         }
                         else
                         {
                             selectedSkills.Add(skill);
-                            skillControl.BorderStyle = BorderStyle.FixedSingle;
-                            //skillControl.Font = new Font(skillControl.Font, FontStyle.Bold);
+                            skillControl.BorderStyle = BorderStyle.Fixed3D;
                         }
+                        UpdateSkillMemoryLayout();
                     }
                     else
                     {
@@ -113,6 +125,7 @@ namespace MarkMaster
         {
             ReloadSkills();
             AdjustButtonPositions();
+            UpdateSkillMemoryLayout();
         }
 
         private void ReloadSkills()
@@ -251,6 +264,72 @@ namespace MarkMaster
             btnStartEditing.Visible = !newStatus;
             btnSave.Visible = newStatus;
             btnRestore.Visible = newStatus;
+        }
+
+        private void UpdateSkillMemoryLayout()
+        {
+            int controlWidth = 177; // 控件的宽度
+            int controlHeight = 37; // 控件的高度
+            int margin = 10; // 控件之间的间隔
+            int formWidth = this.ClientSize.Width; // 当前窗体的宽度
+
+            int x = margin + controlWidth + margin; // 从第二列开始布局
+            var lastVisibleSkillControl = skillControls.LastOrDefault(sc => sc.Visible);
+            int y = lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom + margin : margin; // 从最后一个非隐藏的skillControl下方开始布局
+
+            // 更新横线位置
+            lblSeparator.Width = formWidth - 2 * margin;
+            lblSeparator.Location = new Point(margin, y);
+            lblSeparator.Visible = true;
+            y += lblSeparator.Height + margin;
+
+            foreach (var skill in selectedSkills)
+            {
+                var skillControl = skillControls.FirstOrDefault(sc => sc.Skill == skill);
+                if (skillControl != null)
+                {
+                    var memoryControls = skillMemoryControls.FirstOrDefault(mc => mc.First().Tag == skill);
+                    if (memoryControls == null)
+                    {
+                        memoryControls = new List<Control>();
+                        var newSkillControl = new usrctlSkill(skill) { Tag = skill };
+                        memoryControls.Add(newSkillControl);
+                        this.Controls.Add(newSkillControl);
+
+                        foreach (var memory in skill.Memories)
+                        {
+                            var memoryControl = new usrctlMemory(memory) { Tag = skill };
+                            memoryControls.Add(memoryControl);
+                            this.Controls.Add(memoryControl);
+                        }
+                        skillMemoryControls.Add(memoryControls);
+                    }
+
+                    y = lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom + margin : margin; // 每个skill单独占据一列，从顶部开始布局
+                    foreach (var control in memoryControls)
+                    {
+                        control.Location = new Point(x, y);
+                        y += controlHeight + margin;
+                    }
+                    x += controlWidth + margin; // 新的skill另起一列
+                }
+            }
+
+            // 检查每个memory是否在其他selectedSkills中存在
+            foreach (var skill in selectedSkills)
+            {
+                foreach (var memory in skill.Memories)
+                {
+                    bool isShared = selectedSkills.Any(s => s != skill && s.Memories.Contains(memory));
+
+                    foreach (var memoryControl in skillMemoryControls
+                        .SelectMany(mc => mc)
+                        .Where(c => c is usrctlMemory memory1 && memory1._memory == memory).Cast<usrctlMemory>())
+                    {
+                        memoryControl.BorderStyle = isShared ? BorderStyle.FixedSingle : BorderStyle.None;
+                    }
+                }
+            }
         }
     }
 }

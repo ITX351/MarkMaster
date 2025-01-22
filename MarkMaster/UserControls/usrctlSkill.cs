@@ -35,8 +35,7 @@ namespace MarkMaster
             var image = GlobalData.Instance.GetPreloadedImage(imgFilePath);
             if (image != null)
             {
-                var resizedImage = new Bitmap(image, new Size(30, 30));
-                picboxSkill.Image = resizedImage;
+                picboxSkill.Image = image;
             }
 
             lblSkillLevel.Text = _skill.Level.ToString();

@@ -209,7 +209,12 @@ namespace MarkMaster.Models
                     var imgPath = Tools.GetAbsolutePath($"{Constants.ImgDirectory}{kvp.Key}");
                     if (File.Exists(imgPath))
                     {
-                        _preloadedImages[kvp.Key] = Image.FromFile(imgPath);
+                        var image = Image.FromFile(imgPath);
+                        if (kvp.Key.StartsWith("Skill"))
+                        {
+                            image = new Bitmap(image, new Size(30, 30));
+                        }
+                        _preloadedImages[kvp.Key] = image;
                     }
                 }
             }

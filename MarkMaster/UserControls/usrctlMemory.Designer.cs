@@ -66,16 +66,17 @@
             lblSkillUnlockRate.AutoSize = true;
             lblSkillUnlockRate.Location = new Point(130, 9);
             lblSkillUnlockRate.Name = "lblSkillUnlockRate";
-            lblSkillUnlockRate.Size = new Size(0, 17);
+            lblSkillUnlockRate.Size = new Size(16, 17);
             lblSkillUnlockRate.TabIndex = 2;
+            lblSkillUnlockRate.Text = "X";
             lblSkillUnlockRate.Visible = false;
             // 
             // usrctlMemory
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(lblMemoryName);
             Controls.Add(lblSkillUnlockRate);
+            Controls.Add(lblMemoryName);
             Controls.Add(picMemoryRarity);
             Controls.Add(picMemoryType);
             Name = "usrctlMemory";
