@@ -34,6 +34,17 @@ namespace MarkMaster
                 Controls.Add(memoryControl);
                 yOffset += memoryControl.Height + 10;
             }
+
+            foreach (var npc in _skill.NPCs)
+            {
+                var npcControl = new usrctlNPC(npc)
+                {
+                    Location = new Point(10, yOffset)
+                };
+                Controls.Add(npcControl);
+                yOffset += npcControl.Height + 10;
+            }
+
             this.Size = new Size(this.Width, yOffset + 10);
         }
 

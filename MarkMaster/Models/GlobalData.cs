@@ -210,7 +210,7 @@ namespace MarkMaster.Models
                     if (File.Exists(imgPath))
                     {
                         var image = Image.FromFile(imgPath);
-                        if (kvp.Key.StartsWith("Skill"))
+                        if (kvp.Key.StartsWith("Skill") || kvp.Key.StartsWith("角色"))
                         {
                             image = new Bitmap(image, new Size(30, 30));
                         }

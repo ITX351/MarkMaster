@@ -39,7 +39,7 @@
             // 
             btnCrawler.Location = new Point(47, 60);
             btnCrawler.Name = "btnCrawler";
-            btnCrawler.Size = new Size(191, 94);
+            btnCrawler.Size = new Size(170, 68);
             btnCrawler.TabIndex = 0;
             btnCrawler.Text = "更新技能烙痕资源(&U)";
             btnCrawler.UseVisualStyleBackColor = true;
@@ -47,9 +47,9 @@
             // 
             // btnSkills
             // 
-            btnSkills.Location = new Point(47, 170);
+            btnSkills.Location = new Point(47, 141);
             btnSkills.Name = "btnSkills";
-            btnSkills.Size = new Size(206, 85);
+            btnSkills.Size = new Size(170, 68);
             btnSkills.TabIndex = 1;
             btnSkills.Text = "传承技能一览(&S)";
             btnSkills.UseVisualStyleBackColor = true;
@@ -66,7 +66,7 @@
             // 
             // btnImport
             // 
-            btnImport.Location = new Point(47, 276);
+            btnImport.Location = new Point(47, 222);
             btnImport.Name = "btnImport";
             btnImport.Size = new Size(170, 68);
             btnImport.TabIndex = 3;
@@ -77,7 +77,7 @@
             // lblProgress
             // 
             lblProgress.AutoSize = true;
-            lblProgress.Location = new Point(47, 350);
+            lblProgress.Location = new Point(56, 309);
             lblProgress.Name = "lblProgress";
             lblProgress.Size = new Size(0, 17);
             lblProgress.TabIndex = 4;
@@ -86,14 +86,16 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(269, 353);
             Controls.Add(lblProgress);
             Controls.Add(btnImport);
             Controls.Add(lblLoadingStatus);
             Controls.Add(btnSkills);
             Controls.Add(btnCrawler);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "frmMain";
-            Text = "Form1";
+            Text = "传承技能维护查询系统";
             Load += frmMain_Load;
             ResumeLayout(false);
             PerformLayout();

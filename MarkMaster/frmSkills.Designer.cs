@@ -96,7 +96,7 @@
             // 
             cboSkillUpperTypeFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSkillUpperTypeFilter.FormattingEnabled = true;
-            cboSkillUpperTypeFilter.Items.AddRange(new object[] { "所有技能", "核心技能", "常规技能" });
+            cboSkillUpperTypeFilter.Items.AddRange(new object[] { "所有技能", "核心技能", "常规技能", "常规队长技能", "常规非队长技能" });
             cboSkillUpperTypeFilter.Location = new Point(152, 15);
             cboSkillUpperTypeFilter.Name = "cboSkillUpperTypeFilter";
             cboSkillUpperTypeFilter.Size = new Size(101, 25);
@@ -107,7 +107,7 @@
             // 
             cboSkillLevelFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSkillLevelFilter.FormattingEnabled = true;
-            cboSkillLevelFilter.Items.AddRange(new object[] { "全部", "未习得", "1级", "2级", "3级" });
+            cboSkillLevelFilter.Items.AddRange(new object[] { "全部", "未习得", "1级", "2级", "3级", "未3级" });
             cboSkillLevelFilter.Location = new Point(259, 15);
             cboSkillLevelFilter.Name = "cboSkillLevelFilter";
             cboSkillLevelFilter.Size = new Size(59, 25);

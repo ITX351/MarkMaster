@@ -53,6 +53,7 @@ namespace MarkMaster
                 }
             }
             btnSkillTypeChoose_Click(btnSkillAll, EventArgs.Empty, 0);
+            ReloadAndLayoutSkills();
         }
 
         private void SkillControl_MouseEnter(object sender, EventArgs e, usrctlSkillDetails skillDetailsControl)
@@ -123,9 +124,8 @@ namespace MarkMaster
 
         private void frmSkills_Resize(object sender, EventArgs e)
         {
-            ReloadSkills();
+            ReloadAndLayoutSkills();
             AdjustButtonPositions();
-            UpdateSkillMemoryLayout();
         }
 
         private void ReloadSkills()
@@ -143,10 +143,13 @@ namespace MarkMaster
             {
                 var skill = skillControl.Skill;
                 int skillType = skill.GetSkillTypeValue();
+                int cboSkillUpperTypeFilterIndex = cboSkillUpperTypeFilter.SelectedIndex > 2 ? 2 : cboSkillUpperTypeFilter.SelectedIndex;
                 skillControl.Visible = (nowType == 0 || nowType == skillType) &&
-                    (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilter.SelectedIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
-                    (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level) &&
+                    (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilterIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
+                    (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level || (cboSkillLevelFilter.SelectedIndex == 5 && skill.Level >= 1 && skill.Level <= 2)) &&
                     (string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
+                skillControl.Visible = skillControl.Visible && (cboSkillUpperTypeFilter.SelectedIndex <= 2 || 
+                    (cboSkillUpperTypeFilter.SelectedIndex == 3 && skill.NPCs.Count > 0) || (cboSkillUpperTypeFilter.SelectedIndex == 4 && skill.NPCs.Count == 0));
 
                 if (skillControl.Visible)
                 {
@@ -178,7 +181,7 @@ namespace MarkMaster
         private void btnSkillTypeChoose_Click(object sender, EventArgs e, int type)
         {
             nowType = type;
-            ReloadSkills();
+            ReloadAndLayoutSkills();
 
             btnSkillAll.Font = new Font(btnSkillAll.Font, FontStyle.Regular);
             btnSkillType1.Font = new Font(btnSkillType1.Font, FontStyle.Regular);
@@ -197,7 +200,7 @@ namespace MarkMaster
         {
             if (skillControls.Count > 0)
             {
-                ReloadSkills();
+                ReloadAndLayoutSkills();
             }
         }
 
@@ -205,7 +208,7 @@ namespace MarkMaster
         {
             if (skillControls.Count > 0)
             {
-                ReloadSkills();
+                ReloadAndLayoutSkills();
             }
         }
 
@@ -213,7 +216,7 @@ namespace MarkMaster
         {
             if (skillControls.Count > 0)
             {
-                ReloadSkills();
+                ReloadAndLayoutSkills();
             }
         }
 
@@ -248,6 +251,19 @@ namespace MarkMaster
         {
             if (!isEditing)
             {
+                foreach (var skill in selectedSkills)
+                {
+                    var memoryControls = skillMemoryControls.FirstOrDefault(mc => mc.First().Tag == skill);
+                    if (memoryControls != null)
+                    {
+                        foreach (var control in memoryControls)
+                        {
+                            this.Controls.Remove(control);
+                            control.Dispose();
+                        }
+                        skillMemoryControls.Remove(memoryControls);
+                    }
+                }
                 selectedSkills.Clear();
                 foreach (var skillControl in skillControls)
                 {
@@ -330,6 +346,12 @@ namespace MarkMaster
                     }
                 }
             }
+        }
+
+        private void ReloadAndLayoutSkills()
+        {
+            ReloadSkills();
+            UpdateSkillMemoryLayout();
         }
     }
 }

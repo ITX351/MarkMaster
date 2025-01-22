@@ -69,6 +69,8 @@
             Controls.Add(btnClose);
             Controls.Add(btnImport);
             Controls.Add(rchtxtSkillNames);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "frmImport";
             Text = "导入传承技能";
             ResumeLayout(false);
