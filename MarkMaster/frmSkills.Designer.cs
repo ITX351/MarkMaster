@@ -35,6 +35,9 @@
             btnSkillType4 = new Button();
             cboSkillUpperTypeFilter = new ComboBox();
             cboSkillLevelFilter = new ComboBox();
+            txtSearch = new TextBox();
+            btnSave = new Button();
+            btnRestore = new Button();
             SuspendLayout();
             // 
             // btnSkillType3
@@ -53,7 +56,7 @@
             btnSkillType2.Location = new Point(736, 12);
             btnSkillType2.Name = "btnSkillType2";
             btnSkillType2.Size = new Size(61, 33);
-            btnSkillType2.TabIndex = 8;
+            btnSkillType2.TabIndex = 6;
             btnSkillType2.Text = "三角(&W)";
             btnSkillType2.UseVisualStyleBackColor = true;
             // 
@@ -63,7 +66,7 @@
             btnSkillType1.Location = new Point(671, 12);
             btnSkillType1.Name = "btnSkillType1";
             btnSkillType1.Size = new Size(61, 33);
-            btnSkillType1.TabIndex = 9;
+            btnSkillType1.TabIndex = 5;
             btnSkillType1.Text = "方块(&Q)";
             btnSkillType1.UseVisualStyleBackColor = true;
             // 
@@ -73,7 +76,7 @@
             btnSkillAll.Location = new Point(606, 12);
             btnSkillAll.Name = "btnSkillAll";
             btnSkillAll.Size = new Size(61, 33);
-            btnSkillAll.TabIndex = 10;
+            btnSkillAll.TabIndex = 4;
             btnSkillAll.Text = "全部(&A)";
             btnSkillAll.UseVisualStyleBackColor = true;
             // 
@@ -83,47 +86,83 @@
             btnSkillType4.Location = new Point(868, 12);
             btnSkillType4.Name = "btnSkillType4";
             btnSkillType4.Size = new Size(61, 33);
-            btnSkillType4.TabIndex = 7;
+            btnSkillType4.TabIndex = 8;
             btnSkillType4.Text = "中立(&R)";
             btnSkillType4.UseVisualStyleBackColor = true;
             // 
             // cboSkillUpperTypeFilter
             // 
+            cboSkillUpperTypeFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSkillUpperTypeFilter.FormattingEnabled = true;
             cboSkillUpperTypeFilter.Items.AddRange(new object[] { "所有技能", "核心技能", "常规技能" });
-            cboSkillUpperTypeFilter.Location = new Point(12, 12);
+            cboSkillUpperTypeFilter.Location = new Point(152, 15);
             cboSkillUpperTypeFilter.Name = "cboSkillUpperTypeFilter";
             cboSkillUpperTypeFilter.Size = new Size(101, 25);
-            cboSkillUpperTypeFilter.TabIndex = 11;
+            cboSkillUpperTypeFilter.TabIndex = 1;
             cboSkillUpperTypeFilter.SelectedIndexChanged += cboSkillUpperTypeFilter_SelectedIndexChanged;
             // 
             // cboSkillLevelFilter
             // 
+            cboSkillLevelFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSkillLevelFilter.FormattingEnabled = true;
             cboSkillLevelFilter.Items.AddRange(new object[] { "全部", "未习得", "1级", "2级", "3级" });
-            cboSkillLevelFilter.Location = new Point(119, 12);
+            cboSkillLevelFilter.Location = new Point(259, 15);
             cboSkillLevelFilter.Name = "cboSkillLevelFilter";
             cboSkillLevelFilter.Size = new Size(59, 25);
-            cboSkillLevelFilter.TabIndex = 11;
+            cboSkillLevelFilter.TabIndex = 2;
             cboSkillLevelFilter.SelectedIndexChanged += cboSkillLevelFilter_SelectedIndexChanged;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(380, 17);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(138, 23);
+            txtSearch.TabIndex = 3;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // btnSave
+            // 
+            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnSave.Location = new Point(12, 12);
+            btnSave.Name = "btnSave";
+            btnSave.Size = new Size(61, 33);
+            btnSave.TabIndex = 4;
+            btnSave.Text = "保存(&S)";
+            btnSave.UseVisualStyleBackColor = true;
+            btnSave.Click += btnSave_Click;
+            // 
+            // btnRestore
+            // 
+            btnRestore.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnRestore.Location = new Point(79, 12);
+            btnRestore.Name = "btnRestore";
+            btnRestore.Size = new Size(61, 33);
+            btnRestore.TabIndex = 4;
+            btnRestore.Text = "还原(&Z)";
+            btnRestore.UseVisualStyleBackColor = true;
+            btnRestore.Click += btnRestore_Click;
             // 
             // frmSkills
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(941, 801);
+            Controls.Add(txtSearch);
             Controls.Add(cboSkillLevelFilter);
             Controls.Add(cboSkillUpperTypeFilter);
             Controls.Add(btnSkillType4);
             Controls.Add(btnSkillType3);
             Controls.Add(btnSkillType2);
             Controls.Add(btnSkillType1);
+            Controls.Add(btnRestore);
+            Controls.Add(btnSave);
             Controls.Add(btnSkillAll);
             Name = "frmSkills";
             Text = "传承技能一览";
             Load += frmSkills_Load;
             Resize += frmSkills_Resize;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -135,5 +174,8 @@
         private Button btnSkillType4;
         private ComboBox cboSkillUpperTypeFilter;
         private ComboBox cboSkillLevelFilter;
+        private TextBox txtSearch;
+        private Button btnSave;
+        private Button btnRestore;
     }
 }

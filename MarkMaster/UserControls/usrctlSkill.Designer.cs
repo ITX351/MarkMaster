@@ -41,8 +41,9 @@
             picboxSkill.Size = new Size(30, 30);
             picboxSkill.TabIndex = 0;
             picboxSkill.TabStop = false;
-            picboxSkill.MouseEnter += new EventHandler(Control_MouseEnter);
-            picboxSkill.MouseLeave += new EventHandler(Control_MouseLeave);
+            picboxSkill.MouseEnter += Control_MouseEnter;
+            picboxSkill.MouseLeave += Control_MouseLeave;
+            picboxSkill.MouseClick += Control_MouseClick;
             // 
             // lblSkillName
             // 
@@ -52,8 +53,9 @@
             lblSkillName.Size = new Size(56, 17);
             lblSkillName.TabIndex = 1;
             lblSkillName.Text = "技能名称";
-            lblSkillName.MouseEnter += new EventHandler(Control_MouseEnter);
-            lblSkillName.MouseLeave += new EventHandler(Control_MouseLeave);
+            lblSkillName.MouseEnter += Control_MouseEnter;
+            lblSkillName.MouseLeave += Control_MouseLeave;
+            lblSkillName.MouseClick += Control_MouseClick;
             // 
             // lblSkillLevel
             // 
@@ -64,8 +66,9 @@
             lblSkillLevel.Size = new Size(24, 26);
             lblSkillLevel.TabIndex = 2;
             lblSkillLevel.Text = "3";
-            lblSkillLevel.MouseEnter += new EventHandler(Control_MouseEnter);
-            lblSkillLevel.MouseLeave += new EventHandler(Control_MouseLeave);
+            lblSkillLevel.MouseClick += Control_MouseClick;
+            lblSkillLevel.MouseEnter += Control_MouseEnter;
+            lblSkillLevel.MouseLeave += Control_MouseLeave;
             // 
             // usrctlSkill
             // 

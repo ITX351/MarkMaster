@@ -25,6 +25,8 @@ namespace MarkMaster
 
         private void frmSkills_Load(object sender, EventArgs e)
         {
+            cboSkillUpperTypeFilter.SelectedIndex = 2;
+            cboSkillLevelFilter.SelectedIndex = 0;
             btnSkillType1.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 1);
             btnSkillType2.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 2);
             btnSkillType3.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 3);
@@ -33,14 +35,15 @@ namespace MarkMaster
 
             foreach (var skill in GlobalData.Instance.Skills)
             {
-                if (skill.DataParams.Length > 13 && skill.DataParams[13] == "常规技能" && (skill.NPCs.Count > 0 || skill.Memories.Count > 0))
+                var skillControl = new usrctlSkill(skill);
+                skillControls.Add(skillControl);
+                this.Controls.Add(skillControl);
+                skillControl.MouseClick += SkillControl_MouseClick;
+                if (skill.NPCs.Count > 0 || skill.Memories.Count > 0)
                 {
-                    var skillControl = new usrctlSkill(skill);
                     var skillDetailsControl = new usrctlSkillDetails(skill) { Visible = false };
                     skillControl.MouseEnter += (s, ev) => SkillControl_MouseEnter(s, ev, skillDetailsControl);
                     skillControl.MouseLeave += (s, ev) => SkillControl_MouseLeave(s, ev, skillDetailsControl);
-                    skillControls.Add(skillControl);
-                    this.Controls.Add(skillControl);
                     this.Controls.Add(skillDetailsControl);
                 }
             }
@@ -64,13 +67,33 @@ namespace MarkMaster
             skillDetailsControl.HideDetails();
         }
 
+        private void SkillControl_MouseClick(object sender, EventArgs e)
+        {
+            var mouseEventArgs = e as MouseEventArgs;
+            if (mouseEventArgs != null)
+            {
+                var skillControl = sender as usrctlSkill;
+                if (skillControl != null)
+                {
+                    if (mouseEventArgs.Button == MouseButtons.Left)
+                    {
+                        skillControl.Skill.DoUpgrade();
+                    }
+                    else if (mouseEventArgs.Button == MouseButtons.Right)
+                    {
+                        skillControl.Skill.DoDowngrade();
+                    }
+                }
+            }
+        }
+
         private void frmSkills_Resize(object sender, EventArgs e)
         {
-            AdjustLayout();
+            ReloadSkills();
             AdjustButtonPositions();
         }
 
-        private void AdjustLayout()
+        private void ReloadSkills()
         {
             int controlWidth = 177; // usrctlSkill控件的宽度
             int controlHeight = 37; // usrctlSkill控件的高度
@@ -85,7 +108,10 @@ namespace MarkMaster
             {
                 var skill = skillControl.Skill;
                 int skillType = skill.GetSkillTypeValue();
-                skillControl.Visible = nowType == 0 || nowType == skillType;
+                skillControl.Visible = (nowType == 0 || nowType == skillType) &&
+                    (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilter.SelectedIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
+                    (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level) &&
+                    (string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
 
                 if (skillControl.Visible)
                 {
@@ -117,7 +143,7 @@ namespace MarkMaster
         private void btnSkillTypeChoose_Click(object sender, EventArgs e, int type)
         {
             nowType = type;
-            AdjustLayout();
+            ReloadSkills();
 
             btnSkillAll.Font = new Font(btnSkillAll.Font, FontStyle.Regular);
             btnSkillType1.Font = new Font(btnSkillType1.Font, FontStyle.Regular);
@@ -134,12 +160,45 @@ namespace MarkMaster
 
         private void cboSkillUpperTypeFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (skillControls.Count > 0)
+            {
+                ReloadSkills();
+            }
         }
 
         private void cboSkillLevelFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (skillControls.Count > 0)
+            {
+                ReloadSkills();
+            }
+        }
 
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            if (skillControls.Count > 0)
+            {
+                ReloadSkills();
+            }
+        }
+
+        private void btnRestore_Click(object sender, EventArgs e)
+        {
+            foreach (var skillControl in skillControls)
+            {
+                skillControl.Skill.DoRestore();
+                skillControl.RefreshSkillLevelColor();
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            foreach (var skillControl in skillControls)
+            {
+                skillControl.Skill.DoSave();
+                skillControl.RefreshSkillLevelColor();
+            }
+            GlobalData.Instance.SaveUserData();
         }
     }
 }

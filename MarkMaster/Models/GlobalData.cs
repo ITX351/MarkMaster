@@ -28,7 +28,8 @@ namespace MarkMaster.Models
 
         public bool LoadData()
         {
-            var result = LoadSystemData() & LoadUserData();
+            var result = LoadSystemData();
+            LoadUserData();
             PreloadImages();
             return result;
         }

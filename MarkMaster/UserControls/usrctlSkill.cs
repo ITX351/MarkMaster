@@ -20,6 +20,7 @@ namespace MarkMaster
         {
             InitializeComponent();
             _skill = skill;
+            _skill.LevelChanged += RefreshSkillLevelColor;
         }
 
         public Skill Skill
@@ -50,6 +51,18 @@ namespace MarkMaster
         private void Control_MouseLeave(object sender, EventArgs e)
         {
             OnMouseLeave(e);
+        }
+
+        private void Control_MouseClick(object sender, EventArgs e)
+        {
+            OnMouseClick(e as MouseEventArgs);
+        }
+
+        public void RefreshSkillLevelColor()
+        {
+            lblSkillLevel.Text = _skill.NewLevel.ToString();
+            lblSkillLevel.ForeColor = _skill.NewLevel != _skill.Level ? Color.Red : Color.Black;
+            lblSkillLevel.Visible = _skill.NewLevel != _skill.Level || _skill.Level > 0;
         }
     }
 }
