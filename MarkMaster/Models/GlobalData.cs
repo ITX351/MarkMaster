@@ -23,7 +23,7 @@ namespace MarkMaster.Models
             Memories = [];
             NPCs = [];
             _skillDictionary = null!;
-            _preloadedImages = new Dictionary<string, Image>();
+            _preloadedImages = [];
         }
 
         public bool LoadData()
@@ -128,7 +128,8 @@ namespace MarkMaster.Models
                         ImgMemoryPic = dict.GetValueOrDefault("img_alt_192"),
                         ImgMemoryType = dict.GetValueOrDefault("img_alt_44"),
                         ImgMemoryRarity = dict.GetValueOrDefault("img_alt_105"),
-                        SkillNames = dict.GetValueOrDefault("skill_names")?.Split(", ").ToList() ?? []
+                        SkillNames = dict.GetValueOrDefault("skill_names")?.Split(", ").ToList() ?? [],
+                        SkillUnlockRate = int.TryParse(dict.GetValueOrDefault("skill_unlock_rate"), out int rate) ? rate : 0
                     };
                     memories.Add(memory);
                 }

@@ -23,6 +23,8 @@ namespace MarkMaster.Scripts
         private const string NPCsFileName = Constants.NpcsFileName;
         const string skill_data_prefix = Constants.SkillDataPrefix;
 
+        public event Action<string> OnProgressChanged;
+
         public Crawler()
         {
             // Constructor
@@ -37,6 +39,31 @@ namespace MarkMaster.Scripts
                 htmlDoc.LoadHtml(response);
                 return htmlDoc;
             }
+        }
+
+        public async Task<string> GetSkillUnlockRate(HtmlDocument htmlDoc)
+        {
+            var divTag = htmlDoc.DocumentNode.SelectSingleNode("//div[@title='漫巡属性']");
+            if (divTag != null)
+            {
+                var trTags = divTag.SelectNodes(".//tr");
+                if (trTags != null)
+                {
+                    foreach (var trTag in trTags)
+                    {
+                        var tdTag = trTag.SelectSingleNode($".//td[contains(text(), '{Constants.MemorySkillUnlockUpText}')]");
+                        if (tdTag != null)
+                        {
+                            var tdTags = trTag.SelectNodes(".//td");
+                            if (tdTags != null && tdTags.Count > 0)
+                            {
+                                return tdTags.Last().InnerText.Trim().TrimEnd('％');
+                            }
+                        }
+                    }
+                }
+            }
+            return string.Empty;
         }
 
         public async Task CrawlSkills(HtmlDocument htmlDoc, string fileName = SkillsFileName)
@@ -115,8 +142,12 @@ namespace MarkMaster.Scripts
             if (memoryItems != null)
             {
                 var memories = new List<Dictionary<string, string>>();
+                int totalMemories = memoryItems.Count;
+                int currentMemory = 0;
                 foreach (var item in memoryItems)
                 {
+                    currentMemory++;
+                    OnProgressChanged?.Invoke($"正在获取记忆烙痕列表(2/4)，正在获取烙痕({currentMemory}/{totalMemories})");
                     var memoryData = new Dictionary<string, string>();
                     foreach (var attr in item.Attributes)
                     {
@@ -173,6 +204,16 @@ namespace MarkMaster.Scripts
                             skillNames.Add(skillName);
                         }
                         memoryData["skill_names"] = string.Join(", ", skillNames);
+                    }
+
+                    // 新增逻辑：判断data-param3是否包含“技能解锁提升”
+                    if (memoryData.ContainsKey("data-param3") && memoryData["data-param3"].Contains(Constants.MemorySkillUnlockUpText))
+                    {
+                        var link = domain_url + memoryData["link"] + Constants.MemoryPropertyPageSuffix;
+                        var propertyHtmlDoc = await GetHtmlDocumentFromUrl(link);
+                        var skillUnlockRate = await GetSkillUnlockRate(propertyHtmlDoc);
+                        Debug.Assert(!string.IsNullOrEmpty(skillUnlockRate), "技能解锁提升几率 should not be empty");
+                        memoryData["skill_unlock_rate"] = skillUnlockRate;
                     }
 
                     memories.Add(memoryData);
@@ -289,13 +330,16 @@ namespace MarkMaster.Scripts
             {
                 var json = await File.ReadAllTextAsync(imgSrcFilePath);
                 var imgSrcDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-
+                int totalImages = imgSrcDictionary.Count;
+                int currentImage = 0;
                 using (HttpClient client = new HttpClient())
                 {
                     foreach (var kvp in imgSrcDictionary)
                     {
+                        currentImage++;
+                        OnProgressChanged?.Invoke($"正在下载图片资源(4/4)，正在获取图片({currentImage}/{totalImages})");
                         var imgUrl = kvp.Value;
-                        var imgFileName = kvp.Key + ".png";
+                        var imgFileName = kvp.Key;
                         var imgFilePath = Path.Combine(Tools.GetAbsolutePath(ImgDirectory), imgFileName);
 
                         if (!File.Exists(imgFilePath))
@@ -311,6 +355,7 @@ namespace MarkMaster.Scripts
 
         public async Task StartCrawl()
         {
+            OnProgressChanged?.Invoke("正在获取技能列表(1/4)");
             var skillsFilePath = Tools.GetAbsolutePath($"{ResourcesDirectory}{SkillsFileName}");
             if (!File.Exists(skillsFilePath))
             {
@@ -318,6 +363,7 @@ namespace MarkMaster.Scripts
                 await CrawlSkills(htmlDoc);
             }
 
+            OnProgressChanged?.Invoke("正在获取记忆烙痕列表(2/4)");
             var memoriesFilePath = Tools.GetAbsolutePath($"{ResourcesDirectory}{MemoriesFileName}");
             if (!File.Exists(memoriesFilePath))
             {
@@ -325,6 +371,7 @@ namespace MarkMaster.Scripts
                 await CrawlMemories(htmlDoc);
             }
 
+            OnProgressChanged?.Invoke("正在获取角色列表(3/4)");
             var npcsFilePath = Tools.GetAbsolutePath($"{ResourcesDirectory}{NPCsFileName}");
             if (!File.Exists(npcsFilePath))
             {
@@ -332,6 +379,7 @@ namespace MarkMaster.Scripts
                 await CrawlNPCs(htmlDoc);
             }
 
+            OnProgressChanged?.Invoke("正在下载图片资源(4/4)");
             await DownloadImages();
         }
     }

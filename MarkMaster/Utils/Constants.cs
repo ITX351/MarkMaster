@@ -15,6 +15,8 @@ namespace MarkMaster.Utils
         public const string UserDataFileName = "user_data.json";
         public const string ImgDirectory = ResourcesDirectory + "img/";
         public const string StaticImgDirectory = ResourcesDirectory + "static_img/";
+        public const string MemoryPropertyPageSuffix = "#漫巡属性";
+        public const string MemorySkillUnlockUpText = "技能解锁提升";
 
         public static readonly Dictionary<string, string> ImageKeywords = new Dictionary<string, string>
         {

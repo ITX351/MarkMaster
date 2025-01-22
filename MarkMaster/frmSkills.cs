@@ -131,5 +131,15 @@ namespace MarkMaster
                 button.Font = new Font(button.Font, FontStyle.Bold);
             }
         }
+
+        private void cboSkillUpperTypeFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboSkillLevelFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

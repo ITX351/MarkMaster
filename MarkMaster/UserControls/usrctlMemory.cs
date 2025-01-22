@@ -25,6 +25,13 @@ namespace MarkMaster.UserControls
         {
             lblMemoryName.Text = _memory.MemoryName;
 
+            if (_memory.SkillUnlockRate != 0)
+            {
+                lblMemoryName.Font = new Font(lblMemoryName.Font, FontStyle.Bold);
+                lblSkillUnlockRate.Text = $"{_memory.SkillUnlockRate}";
+                lblSkillUnlockRate.Visible = true;
+            }
+
             if (Constants.ImageKeywords.TryGetValue(_memory.DataParams[1], out string rarityImage))
             {
                 picMemoryRarity.Image = GlobalData.Instance.GetPreloadedImage(rarityImage);

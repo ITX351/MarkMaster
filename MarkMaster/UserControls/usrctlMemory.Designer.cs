@@ -31,6 +31,7 @@
             picMemoryType = new PictureBox();
             picMemoryRarity = new PictureBox();
             lblMemoryName = new Label();
+            lblSkillUnlockRate = new Label();
             ((System.ComponentModel.ISupportInitialize)picMemoryType).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picMemoryRarity).BeginInit();
             SuspendLayout();
@@ -60,11 +61,21 @@
             lblMemoryName.TabIndex = 1;
             lblMemoryName.Text = "烙痕名称";
             // 
+            // lblSkillUnlockRate
+            // 
+            lblSkillUnlockRate.AutoSize = true;
+            lblSkillUnlockRate.Location = new Point(130, 9);
+            lblSkillUnlockRate.Name = "lblSkillUnlockRate";
+            lblSkillUnlockRate.Size = new Size(0, 17);
+            lblSkillUnlockRate.TabIndex = 2;
+            lblSkillUnlockRate.Visible = false;
+            // 
             // usrctlMemory
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(lblMemoryName);
+            Controls.Add(lblSkillUnlockRate);
             Controls.Add(picMemoryRarity);
             Controls.Add(picMemoryType);
             Name = "usrctlMemory";
@@ -81,5 +92,6 @@
         private PictureBox picMemoryType;
         private PictureBox picMemoryRarity;
         private Label lblMemoryName;
+        private Label lblSkillUnlockRate;
     }
 }

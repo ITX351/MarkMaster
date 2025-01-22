@@ -3,18 +3,19 @@
     "data-param0": "0",
     "data-param1": "SSR",
     "data-param2": "体质",
-    "data-param3": "体质获取提升, 初始专精提升, 初始体质提升, 初始防御提升, 点亮几率提升, 点亮增加, 点亮获取增幅, 烙痕唤醒奖励增加",
-    "data-param4": "Aurogon Shanghai",
-    "data-param5": "",
+    "data-param3": "体质获取提升, 全能, 初始攻击提升, 技能解锁提升, 点亮几率提升, 点亮增加, 点亮获取增幅, 烙痕唤醒奖励增加",
+    "data-param4": "-木昆昆-",
+    "data-param5": "属性乘区·额外攻击力加成",
     "data-param6": "物理, 通用",
-    "data-param7": "额外伤害",
-    "data-param8": "受伤害减少",
+    "data-param7": "技能增伤, 额外伤害",
+    "data-param8": "",
     "data-param9": "",
-    "data-param10": "忽略减伤",
-    "link": "/bjhl/%E8%AE%B0%E5%BF%86%E7%83%99%E7%97%95/%E6%80%AF%E8%80%85%E7%9A%84%E5%A2%93%E5%BF%97%E9%93%AD",
-    "img_alt_192": "记忆烙痕 怯者的墓志铭 缩略图2.png",
+    "data-param10": "额外受治疗加成",
+    "link": "/bjhl/%E8%AE%B0%E5%BF%86%E7%83%99%E7%97%95/%E9%81%87%E8%A7%81%E5%AE%9D%E7%9F%B3%E6%B5%B7",
+    "img_alt_192": "记忆烙痕 遇见宝石海 缩略图2.png",
     "img_alt_44": "UI 烙痕缩略图2 属性 体质.png",
     "img_alt_105": "UI 烙痕缩略图2 稀有度 SSR.png",
-    "skill_names": "唤物充能, 人形特攻·α型, 强攻·对地·方块, 无处可藏, 核心充能·方块·α型, 生生不息·方块, 职业联动·方块, 距离把控"
+    "skill_names": "穹雷破晓, 乘人之危·对地, 你相信光吗, 势如破竹·对精英, 单打独斗·对首领, 回收利用, 生机盎然·方块·β型, 自动瞄准系统·方块·β型",
+    "skill_unlock_rate": "40"
   }
 ]

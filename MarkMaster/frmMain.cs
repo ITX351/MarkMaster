@@ -12,7 +12,21 @@ namespace MarkMaster
         private async void btnCrawler_Click(object sender, EventArgs e)
         {
             var crawler = new Scripts.Crawler();
+            crawler.OnProgressChanged += UpdateProgress;
             await Task.Run(crawler.StartCrawl);
+            UpdateProgress("资源下载完成！");
+        }
+
+        private void UpdateProgress(string message)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action<string>(UpdateProgress), message);
+            }
+            else
+            {
+                lblProgress.Text = message;
+            }
         }
 
         private void btnSkills_Click(object sender, EventArgs e)
