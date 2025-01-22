@@ -38,12 +38,13 @@
             txtSearch = new TextBox();
             btnSave = new Button();
             btnRestore = new Button();
+            btnStartEditing = new Button();
             SuspendLayout();
             // 
             // btnSkillType3
             // 
             btnSkillType3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSkillType3.Location = new Point(801, 12);
+            btnSkillType3.Location = new Point(851, 12);
             btnSkillType3.Name = "btnSkillType3";
             btnSkillType3.Size = new Size(61, 33);
             btnSkillType3.TabIndex = 7;
@@ -53,7 +54,7 @@
             // btnSkillType2
             // 
             btnSkillType2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSkillType2.Location = new Point(736, 12);
+            btnSkillType2.Location = new Point(786, 12);
             btnSkillType2.Name = "btnSkillType2";
             btnSkillType2.Size = new Size(61, 33);
             btnSkillType2.TabIndex = 6;
@@ -63,7 +64,7 @@
             // btnSkillType1
             // 
             btnSkillType1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSkillType1.Location = new Point(671, 12);
+            btnSkillType1.Location = new Point(721, 12);
             btnSkillType1.Name = "btnSkillType1";
             btnSkillType1.Size = new Size(61, 33);
             btnSkillType1.TabIndex = 5;
@@ -73,7 +74,7 @@
             // btnSkillAll
             // 
             btnSkillAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSkillAll.Location = new Point(606, 12);
+            btnSkillAll.Location = new Point(656, 12);
             btnSkillAll.Name = "btnSkillAll";
             btnSkillAll.Size = new Size(61, 33);
             btnSkillAll.TabIndex = 4;
@@ -83,7 +84,7 @@
             // btnSkillType4
             // 
             btnSkillType4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnSkillType4.Location = new Point(868, 12);
+            btnSkillType4.Location = new Point(918, 12);
             btnSkillType4.Name = "btnSkillType4";
             btnSkillType4.Size = new Size(61, 33);
             btnSkillType4.TabIndex = 8;
@@ -122,31 +123,41 @@
             // 
             // btnSave
             // 
-            btnSave.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnSave.Location = new Point(12, 12);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(61, 33);
             btnSave.TabIndex = 4;
             btnSave.Text = "保存(&S)";
             btnSave.UseVisualStyleBackColor = true;
+            btnSave.Visible = false;
             btnSave.Click += btnSave_Click;
             // 
             // btnRestore
             // 
-            btnRestore.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnRestore.Location = new Point(79, 12);
             btnRestore.Name = "btnRestore";
             btnRestore.Size = new Size(61, 33);
             btnRestore.TabIndex = 4;
             btnRestore.Text = "还原(&Z)";
             btnRestore.UseVisualStyleBackColor = true;
+            btnRestore.Visible = false;
             btnRestore.Click += btnRestore_Click;
+            // 
+            // btnStartEditing
+            // 
+            btnStartEditing.Location = new Point(12, 12);
+            btnStartEditing.Name = "btnStartEditing";
+            btnStartEditing.Size = new Size(128, 33);
+            btnStartEditing.TabIndex = 4;
+            btnStartEditing.Text = "编辑模式(&M)";
+            btnStartEditing.UseVisualStyleBackColor = true;
+            btnStartEditing.Click += btnStartEditing_Click;
             // 
             // frmSkills
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(941, 801);
+            ClientSize = new Size(991, 801);
             Controls.Add(txtSearch);
             Controls.Add(cboSkillLevelFilter);
             Controls.Add(cboSkillUpperTypeFilter);
@@ -157,6 +168,7 @@
             Controls.Add(btnRestore);
             Controls.Add(btnSave);
             Controls.Add(btnSkillAll);
+            Controls.Add(btnStartEditing);
             Name = "frmSkills";
             Text = "传承技能一览";
             Load += frmSkills_Load;
@@ -177,5 +189,6 @@
         private TextBox txtSearch;
         private Button btnSave;
         private Button btnRestore;
+        private Button btnStartEditing;
     }
 }

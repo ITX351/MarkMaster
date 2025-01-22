@@ -14,8 +14,8 @@ namespace MarkMaster.Models
         public List<Memory> Memories { get; set; }
         public List<NPC> NPCs { get; set; }
 
-        public int Level { get; set; }
-        public int NewLevel { get; set; }
+        public int Level { get; private set; }
+        public int NewLevel { get; private set; }
 
         public event Action LevelChanged;
 
@@ -66,6 +66,12 @@ namespace MarkMaster.Models
             {
                 NewLevel = 3;
             }
+            LevelChanged?.Invoke();
+        }
+        public void SetLevel(int level)
+        {
+            Level = level;
+            NewLevel = level;
             LevelChanged?.Invoke();
         }
     }

@@ -56,7 +56,7 @@ namespace MarkMaster.Models
                 {
                     if (_skillDictionary.TryGetValue(kvp.Key, out var skill))
                     {
-                        skill.Level = kvp.Value;
+                        skill.SetLevel(kvp.Value);
                     }
                 }
                 return true;

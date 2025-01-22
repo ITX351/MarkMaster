@@ -29,17 +29,26 @@ namespace MarkMaster
             var unmatchedSkillNames = new List<string>();
             int matchedCount = 0;
 
-            foreach (var skillName in skillNames)
+            foreach (var line in skillNames)
             {
-                var skill = GlobalData.Instance.Skills.FirstOrDefault(s => s.SkillName == skillName.Trim());
+                var parts = line.Trim().Split(' ');
+                var skillName = parts[0];
+                int level = 3;
+
+                if (parts.Length > 1 && int.TryParse(parts[1], out int parsedLevel) && parsedLevel >= 0 && parsedLevel <= 3)
+                {
+                    level = parsedLevel;
+                }
+
+                var skill = GlobalData.Instance.Skills.FirstOrDefault(s => s.SkillName == skillName);
                 if (skill != null)
                 {
-                    skill.Level = 3;
+                    skill.SetLevel(level);
                     matchedCount++;
                 }
                 else
                 {
-                    unmatchedSkillNames.Add(skillName);
+                    unmatchedSkillNames.Add(line);
                 }
             }
 

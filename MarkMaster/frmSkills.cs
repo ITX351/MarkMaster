@@ -14,13 +14,16 @@ namespace MarkMaster
 {
     public partial class frmSkills : Form
     {
-        private List<usrctlSkill> skillControls;
+        private readonly List<usrctlSkill> skillControls;
         private int nowType = 0;
+        private bool isEditing = false;
+        private readonly List<Skill> selectedSkills;
 
         public frmSkills()
         {
             InitializeComponent();
-            skillControls = new List<usrctlSkill>();
+            skillControls = [];
+            selectedSkills = [];
         }
 
         private void frmSkills_Load(object sender, EventArgs e)
@@ -75,13 +78,32 @@ namespace MarkMaster
                 var skillControl = sender as usrctlSkill;
                 if (skillControl != null)
                 {
-                    if (mouseEventArgs.Button == MouseButtons.Left)
+                    var skill = skillControl.Skill;
+                    if (!isEditing)
                     {
-                        skillControl.Skill.DoUpgrade();
+                        if (selectedSkills.Contains(skill))
+                        {
+                            selectedSkills.Remove(skill);
+                            skillControl.BorderStyle = BorderStyle.None;
+                            //skillControl.Font = new Font(skillControl.Font, FontStyle.Regular);
+                        }
+                        else
+                        {
+                            selectedSkills.Add(skill);
+                            skillControl.BorderStyle = BorderStyle.FixedSingle;
+                            //skillControl.Font = new Font(skillControl.Font, FontStyle.Bold);
+                        }
                     }
-                    else if (mouseEventArgs.Button == MouseButtons.Right)
+                    else
                     {
-                        skillControl.Skill.DoDowngrade();
+                        if (mouseEventArgs.Button == MouseButtons.Left)
+                        {
+                            skill.DoUpgrade();
+                        }
+                        else if (mouseEventArgs.Button == MouseButtons.Right)
+                        {
+                            skill.DoDowngrade();
+                        }
                     }
                 }
             }
@@ -184,21 +206,51 @@ namespace MarkMaster
 
         private void btnRestore_Click(object sender, EventArgs e)
         {
-            foreach (var skillControl in skillControls)
+            if (isEditing)
             {
-                skillControl.Skill.DoRestore();
-                skillControl.RefreshSkillLevelColor();
+                foreach (var skillControl in skillControls)
+                {
+                    skillControl.Skill.DoRestore();
+                    skillControl.RefreshSkillLevelColor();
+                }
+                switchEditingStatus(false);
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            foreach (var skillControl in skillControls)
+            if (isEditing)
             {
-                skillControl.Skill.DoSave();
-                skillControl.RefreshSkillLevelColor();
+                foreach (var skillControl in skillControls)
+                {
+                    skillControl.Skill.DoSave();
+                    skillControl.RefreshSkillLevelColor();
+                }
+                GlobalData.Instance.SaveUserData();
+                switchEditingStatus(false);
             }
-            GlobalData.Instance.SaveUserData();
+        }
+
+        private void btnStartEditing_Click(object sender, EventArgs e)
+        {
+            if (!isEditing)
+            {
+                selectedSkills.Clear();
+                foreach (var skillControl in skillControls)
+                {
+                    skillControl.BorderStyle = BorderStyle.None;
+                    //skillControl.Font = new Font(skillControl.Font, FontStyle.Regular);
+                }
+                switchEditingStatus(true);
+            }
+        }
+
+        private void switchEditingStatus(bool newStatus)
+        {
+            isEditing = newStatus;
+            btnStartEditing.Visible = !newStatus;
+            btnSave.Visible = newStatus;
+            btnRestore.Visible = newStatus;
         }
     }
 }
