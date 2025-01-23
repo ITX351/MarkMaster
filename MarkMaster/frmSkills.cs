@@ -20,12 +20,21 @@ namespace MarkMaster
         private bool isEditing = false;
         private readonly List<Skill> selectedSkills;
         private readonly List<List<Control>> skillMemoryControls = new List<List<Control>>();
+        private static readonly Color[] FlagColors = {
+            Color.Transparent, // 0
+            Color.LightBlue,   // 1 Ctrl左
+            Color.LightGreen,  // 2 Ctrl右
+            Color.Gold,        // 3 Alt左
+            Color.LightCoral,  // 4 Alt右
+            Color.LightPink,   // 5 Shift左
+            Color.DarkGray     // 6 Shift右
+        };
 
         public frmSkills()
         {
             InitializeComponent();
-            skillControls = [];
-            selectedSkills = [];
+            skillControls = new List<usrctlSkill>();
+            selectedSkills = new List<Skill>();
         }
 
         private void frmSkills_Load(object sender, EventArgs e)
@@ -51,6 +60,7 @@ namespace MarkMaster
                     skillControl.MouseLeave += (s, ev) => SkillControl_MouseLeave(s, ev, skillDetailsControl);
                     this.Controls.Add(skillDetailsControl);
                 }
+                skillControl.BackColor = GetFlagColor(skill.Flag);
             }
             btnSkillTypeChoose_Click(btnSkillAll, EventArgs.Empty, 0);
             ReloadAndLayoutSkills();
@@ -82,7 +92,35 @@ namespace MarkMaster
                 if (skillControl != null)
                 {
                     var skill = skillControl.Skill;
-                    if (!isEditing)
+                    bool isCtrlPressed = (Control.ModifierKeys & Keys.Control) == Keys.Control;
+                    bool isAltPressed = (Control.ModifierKeys & Keys.Alt) == Keys.Alt;
+                    bool isShiftPressed = (Control.ModifierKeys & Keys.Shift) == Keys.Shift;
+
+                    if (isCtrlPressed || isAltPressed || isShiftPressed)
+                    {
+                        int flag = 0;
+                        if (isCtrlPressed && mouseEventArgs.Button == MouseButtons.Left) flag = 1;
+                        else if (isCtrlPressed && mouseEventArgs.Button == MouseButtons.Right) flag = 2;
+                        else if (isAltPressed && mouseEventArgs.Button == MouseButtons.Left) flag = 3;
+                        else if (isAltPressed && mouseEventArgs.Button == MouseButtons.Right) flag = 4;
+                        else if (isShiftPressed && mouseEventArgs.Button == MouseButtons.Left) flag = 5;
+                        else if (isShiftPressed && mouseEventArgs.Button == MouseButtons.Right) flag = 6;
+
+                        if (flag > 0)
+                        {
+                            if (skill.Flag == flag)
+                            {
+                                skill.Flag = 0;
+                                skillControl.BackColor = Color.Transparent;
+                            }
+                            else
+                            {
+                                skill.Flag = flag;
+                                skillControl.BackColor = GetFlagColor(flag);
+                            }
+                        }
+                    }
+                    else if (!isEditing)
                     {
                         if (selectedSkills.Contains(skill))
                         {
@@ -120,6 +158,15 @@ namespace MarkMaster
                     }
                 }
             }
+        }
+
+        private Color GetFlagColor(int flag)
+        {
+            if (flag >= 0 && flag < FlagColors.Length)
+            {
+                return FlagColors[flag];
+            }
+            return Color.Transparent;
         }
 
         private void frmSkills_Resize(object sender, EventArgs e)
@@ -291,7 +338,7 @@ namespace MarkMaster
 
             int x = margin + controlWidth + margin; // 从第二列开始布局
             var lastVisibleSkillControl = skillControls.LastOrDefault(sc => sc.Visible);
-            int y = lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom + margin : margin; // 从最后一个非隐藏的skillControl下方开始布局
+            int y = lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom + margin : btnSkillAll.Bottom + margin; // 从最后一个非隐藏的skillControl下方开始布局
 
             // 更新横线位置
             lblSeparator.Width = formWidth - 2 * margin;
@@ -309,6 +356,7 @@ namespace MarkMaster
                     {
                         memoryControls = new List<Control>();
                         var newSkillControl = new usrctlSkill(skill) { Tag = skill };
+                        newSkillControl.MouseClick += NewSkillControl_MouseClick; // 添加右键单击事件
                         memoryControls.Add(newSkillControl);
                         this.Controls.Add(newSkillControl);
 
@@ -321,7 +369,7 @@ namespace MarkMaster
                         skillMemoryControls.Add(memoryControls);
                     }
 
-                    y = lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom + margin : margin; // 每个skill单独占据一列，从顶部开始布局
+                    y = lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom + margin : btnSkillAll.Bottom + margin; // 每个skill单独占据一列，从顶部开始布局
                     foreach (var control in memoryControls)
                     {
                         control.Location = new Point(x, y);
@@ -348,10 +396,48 @@ namespace MarkMaster
             }
         }
 
+        private void NewSkillControl_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var skillControl = sender as usrctlSkill;
+                if (skillControl != null)
+                {
+                    var skill = skillControl.Skill;
+                    if (selectedSkills.Contains(skill))
+                    {
+                        selectedSkills.Remove(skill);
+                        var originalSkillControl = skillControls.FirstOrDefault(sc => sc.Skill == skill);
+                        if (originalSkillControl != null)
+                        {
+                            originalSkillControl.BorderStyle = BorderStyle.None;
+                        }
+                        // 销毁与它相关的控件
+                        var memoryControls = skillMemoryControls.FirstOrDefault(mc => mc.First().Tag == skill);
+                        if (memoryControls != null)
+                        {
+                            foreach (var control in memoryControls)
+                            {
+                                this.Controls.Remove(control);
+                                control.Dispose();
+                            }
+                            skillMemoryControls.Remove(memoryControls);
+                        }
+                        UpdateSkillMemoryLayout();
+                    }
+                }
+            }
+        }
+
         private void ReloadAndLayoutSkills()
         {
             ReloadSkills();
             UpdateSkillMemoryLayout();
+        }
+
+        private void frmSkills_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GlobalData.Instance.SaveSkillFlags();
         }
     }
 }

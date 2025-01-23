@@ -16,6 +16,7 @@ namespace MarkMaster.Models
 
         public int Level { get; private set; }
         public int NewLevel { get; private set; }
+        public int Flag { get; set; }
 
         public event Action LevelChanged;
 
@@ -31,6 +32,7 @@ namespace MarkMaster.Models
             NPCs = [];
             Level = 0;
             NewLevel = 0;
+            Flag = 0;
         }
 
         public int GetSkillTypeValue()

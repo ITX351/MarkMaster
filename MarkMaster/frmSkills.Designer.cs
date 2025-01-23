@@ -183,6 +183,7 @@
             Name = "frmSkills";
             Text = "传承技能一览";
             Load += frmSkills_Load;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSkills_FormClosing);
             Resize += frmSkills_Resize;
             ResumeLayout(false);
             PerformLayout();

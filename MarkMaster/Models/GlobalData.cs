@@ -30,6 +30,7 @@ namespace MarkMaster.Models
         {
             var result = LoadSystemData();
             LoadUserData();
+            LoadSkillFlags();
             PreloadImages();
             return result;
         }
@@ -74,6 +75,34 @@ namespace MarkMaster.Models
             File.WriteAllText(filePath, json);
 
             return true;
+        }
+
+        public void LoadSkillFlags()
+        {
+            var filePath = Tools.GetAbsolutePath($"{Constants.ResourcesDirectory}{Constants.SkillFlagsFileName}");
+            if (File.Exists(filePath))
+            {
+                var json = File.ReadAllText(filePath);
+                var skillFlags = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
+
+                foreach (var kvp in skillFlags)
+                {
+                    if (_skillDictionary.TryGetValue(kvp.Key, out var skill))
+                    {
+                        skill.Flag = kvp.Value;
+                    }
+                }
+            }
+        }
+
+        public void SaveSkillFlags()
+        {
+            var skillFlags = Skills.Where(skill => skill.Flag > 0)
+                                   .ToDictionary(skill => skill.SkillName, skill => skill.Flag);
+
+            var json = JsonConvert.SerializeObject(skillFlags, Formatting.Indented);
+            var filePath = Tools.GetAbsolutePath($"{Constants.ResourcesDirectory}{Constants.SkillFlagsFileName}");
+            File.WriteAllText(filePath, json);
         }
 
         private static List<Skill> LoadSkills(string fileName)

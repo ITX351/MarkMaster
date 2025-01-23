@@ -13,6 +13,7 @@ namespace MarkMaster.Utils
         public const string NpcsFileName = "npcs.json";
         public const string SkillDataPrefix = "刻印技能/";
         public const string UserDataFileName = "user_data.json";
+        public const string SkillFlagsFileName = "skill_flags.json";
         public const string ImgDirectory = ResourcesDirectory + "img/";
         public const string StaticImgDirectory = ResourcesDirectory + "static_img/";
         public const string MemoryPropertyPageSuffix = "#漫巡属性";
