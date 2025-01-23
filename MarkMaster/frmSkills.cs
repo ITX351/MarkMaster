@@ -192,11 +192,15 @@ namespace MarkMaster
                 int skillType = skill.GetSkillTypeValue();
                 int cboSkillUpperTypeFilterIndex = cboSkillUpperTypeFilter.SelectedIndex > 2 ? 2 : cboSkillUpperTypeFilter.SelectedIndex;
                 skillControl.Visible = (nowType == 0 || nowType == skillType) &&
-                    (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilterIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
                     (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level || (cboSkillLevelFilter.SelectedIndex == 5 && skill.Level >= 1 && skill.Level <= 2)) &&
                     (string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
-                skillControl.Visible = skillControl.Visible && (cboSkillUpperTypeFilter.SelectedIndex <= 2 || 
-                    (cboSkillUpperTypeFilter.SelectedIndex == 3 && skill.NPCs.Count > 0) || (cboSkillUpperTypeFilter.SelectedIndex == 4 && skill.NPCs.Count == 0));
+                skillControl.Visible = skillControl.Visible && 
+                    (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilterIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
+                    (cboSkillUpperTypeFilter.SelectedIndex < 2 || 
+                    (cboSkillUpperTypeFilter.SelectedIndex == 2 && (skill.Memories.Count > 0 || skill.NPCs.Count > 0)) || 
+                    (cboSkillUpperTypeFilter.SelectedIndex == 3 && skill.NPCs.Count > 0) || 
+                    (cboSkillUpperTypeFilter.SelectedIndex == 4 && skill.Memories.Count > 0 && skill.NPCs.Count == 0) || 
+                    (cboSkillUpperTypeFilter.SelectedIndex == 5 && skill.Memories.Count == 0 && skill.NPCs.Count == 0));
 
                 if (skillControl.Visible)
                 {

@@ -7,13 +7,14 @@ namespace MarkMaster.Utils
         public const string MemoryUrl = DomainUrl + "bjhl/%E8%AE%B0%E5%BF%86%E7%83%99%E7%97%95%E7%AD%9B%E9%80%89";
         public const string NpcUrl = DomainUrl + "bjhl/%E5%90%8C%E8%B0%83%E8%80%85%E7%AD%9B%E9%80%89";
         public const string ResourcesDirectory = "resources/";
+        public const string UserDirectory = "user/";
         public const string SkillsFileName = "skills.json";
         public const string ImgSrcDictionaryFileName = "dict_img2src.json";
         public const string MemoriesFileName = "memories.json";
         public const string NpcsFileName = "npcs.json";
         public const string SkillDataPrefix = "刻印技能/";
-        public const string UserDataFileName = "user_data.json";
-        public const string SkillFlagsFileName = "user_skill_flags.json";
+        public const string UserSkillLevelsFileName = "skill_levels.json";
+        public const string UserSkillFlagsFileName = "skill_flags.json";
         public const string ImgDirectory = ResourcesDirectory + "img/";
         public const string StaticImgDirectory = ResourcesDirectory + "static_img/";
         public const string MemoryPropertyPageSuffix = "#漫巡属性";

@@ -96,7 +96,7 @@
             // 
             cboSkillUpperTypeFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             cboSkillUpperTypeFilter.FormattingEnabled = true;
-            cboSkillUpperTypeFilter.Items.AddRange(new object[] { "所有技能", "核心技能", "常规技能", "常规队长技能", "常规非队长技能" });
+            cboSkillUpperTypeFilter.Items.AddRange(new object[] { "所有技能", "核心技能", "常规技能", "常规队长技能", "常规非队长技能", "不可习得技能" });
             cboSkillUpperTypeFilter.Location = new Point(152, 15);
             cboSkillUpperTypeFilter.Name = "cboSkillUpperTypeFilter";
             cboSkillUpperTypeFilter.Size = new Size(101, 25);
@@ -182,8 +182,8 @@
             Controls.Add(btnStartEditing);
             Name = "frmSkills";
             Text = "传承技能一览";
+            FormClosing += frmSkills_FormClosing;
             Load += frmSkills_Load;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSkills_FormClosing);
             Resize += frmSkills_Resize;
             ResumeLayout(false);
             PerformLayout();
