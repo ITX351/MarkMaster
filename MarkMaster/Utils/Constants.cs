@@ -19,17 +19,17 @@ namespace MarkMaster.Utils
         public const string MemoryPropertyPageSuffix = "#漫巡属性";
         public const string MemorySkillUnlockUpText = "技能解锁提升";
 
-        public static readonly Dictionary<string, string> ImageKeywords = new Dictionary<string, string>
-        {
-            { "R", "30px-R.png" },
-            { "SR", "30px-SR.png" },
-            { "SSR", "30px-SSR.png" },
-            { "防御", "30px-烙痕_防御.png" },
-            { "攻击", "30px-烙痕_攻击.png" },
-            { "体质", "30px-烙痕_体质.png" },
-            { "终端", "30px-烙痕_终端.png" },
-            { "专精", "30px-烙痕_专精.png" }
-        };
+        // public static readonly Dictionary<string, string> ImageKeywords = new Dictionary<string, string>
+        // {
+        //     { "R", "30px-R.png" },
+        //     { "SR", "30px-SR.png" },
+        //     { "SSR", "30px-SSR.png" },
+        //     { "防御", "30px-烙痕_防御.png" },
+        //     { "攻击", "30px-烙痕_攻击.png" },
+        //     { "体质", "30px-烙痕_体质.png" },
+        //     { "终端", "30px-烙痕_终端.png" },
+        //     { "专精", "30px-烙痕_专精.png" }
+        // };
 
         public static readonly Dictionary<string, int> SkillTypeValues = new Dictionary<string, int>
         {

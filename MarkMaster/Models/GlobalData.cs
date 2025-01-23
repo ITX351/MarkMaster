@@ -248,14 +248,14 @@ namespace MarkMaster.Models
                 }
             }
 
-            foreach (var kvp in Constants.ImageKeywords)
-            {
-                var imgPath = Tools.GetAbsolutePath($"{Constants.StaticImgDirectory}{kvp.Value}");
-                if (File.Exists(imgPath))
-                {
-                    _preloadedImages[kvp.Value] = Image.FromFile(imgPath);
-                }
-            }
+            // foreach (var kvp in Constants.ImageKeywords)
+            // {
+            //     var imgPath = Tools.GetAbsolutePath($"{Constants.StaticImgDirectory}{kvp.Value}");
+            //     if (File.Exists(imgPath))
+            //     {
+            //         _preloadedImages[kvp.Value] = Image.FromFile(imgPath);
+            //     }
+            // }
         }
 
         public Image GetPreloadedImage(string key)

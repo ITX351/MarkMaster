@@ -32,14 +32,46 @@ namespace MarkMaster.UserControls
                 lblSkillUnlockRate.Visible = true;
             }
 
-            if (Constants.ImageKeywords.TryGetValue(_memory.DataParams[1], out string rarityImage))
+            // if (Constants.ImageKeywords.TryGetValue(_memory.DataParams[1], out string rarityImage))
+            // {
+            //     picMemoryRarity.Image = GlobalData.Instance.GetPreloadedImage(rarityImage);
+            // }
+
+            // if (Constants.ImageKeywords.TryGetValue(_memory.DataParams[2], out string typeImage))
+            // {
+            //     picMemoryType.Image = GlobalData.Instance.GetPreloadedImage(typeImage);
+            // }
+
+            switch (_memory.DataParams[1])
             {
-                picMemoryRarity.Image = GlobalData.Instance.GetPreloadedImage(rarityImage);
+                case "R":
+                    picMemoryRarity.Image = Resources.R;
+                    break;
+                case "SR":
+                    picMemoryRarity.Image = Resources.SR;
+                    break;
+                case "SSR":
+                    picMemoryRarity.Image = Resources.SSR;
+                    break;
             }
 
-            if (Constants.ImageKeywords.TryGetValue(_memory.DataParams[2], out string typeImage))
+            switch (_memory.DataParams[2])
             {
-                picMemoryType.Image = GlobalData.Instance.GetPreloadedImage(typeImage);
+                case "防御":
+                    picMemoryType.Image = Resources.防御;
+                    break;
+                case "攻击":
+                    picMemoryType.Image = Resources.攻击;
+                    break;
+                case "体质":
+                    picMemoryType.Image = Resources.体质;
+                    break;
+                case "终端":
+                    picMemoryType.Image = Resources.终端;
+                    break;
+                case "专精":
+                    picMemoryType.Image = Resources.专精;
+                    break;
             }
         }
     }
