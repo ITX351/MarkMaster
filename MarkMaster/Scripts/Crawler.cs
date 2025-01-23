@@ -37,6 +37,23 @@ namespace MarkMaster.Scripts
             }
         }
 
+        private string GetFirstNonPngHref(HtmlNode item)
+        {
+            var aTags = item.SelectNodes(".//a");
+            if (aTags != null)
+            {
+                foreach (var aTag in aTags)
+                {
+                    var href = aTag.GetAttributeValue("href", string.Empty);
+                    if (!href.EndsWith(".png"))
+                    {
+                        return href;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+
         public async Task<string> GetSkillUnlockRate(HtmlDocument htmlDoc)
         {
             var divTag = htmlDoc.DocumentNode.SelectSingleNode("//div[@title='漫巡属性']");
@@ -82,10 +99,10 @@ namespace MarkMaster.Scripts
                     }
 
                     // 存储第一个a标签的链接内容
-                    var aTag = item.SelectSingleNode(".//a");
-                    if (aTag != null)
+                    var link = GetFirstNonPngHref(item);
+                    if (!string.IsNullOrEmpty(link))
                     {
-                        skillData["link"] = aTag.GetAttributeValue("href", string.Empty);
+                        skillData["link"] = link;
                     }
 
                     // 存储img标签的alt内容和src
@@ -154,10 +171,10 @@ namespace MarkMaster.Scripts
                     }
 
                     // 存储第一个a标签的链接内容
-                    var aTag = item.SelectSingleNode(".//a");
-                    if (aTag != null)
+                    var link = GetFirstNonPngHref(item);
+                    if (!string.IsNullOrEmpty(link))
                     {
-                        memoryData["link"] = aTag.GetAttributeValue("href", string.Empty);
+                        memoryData["link"] = link;
                     }
 
                     // 存储img标签的alt内容和src
@@ -202,11 +219,11 @@ namespace MarkMaster.Scripts
                         memoryData["skill_names"] = string.Join(", ", skillNames);
                     }
 
-                    // 新增逻辑：判断data-param3是否包含“技能解锁提升”
-                    if (memoryData.ContainsKey("data-param3") && memoryData["data-param3"].Contains(Constants.MemorySkillUnlockUpText))
+                    // 判断data-param3是否包含“技能解锁提升”
+                    if (!string.IsNullOrEmpty(link) && memoryData.TryGetValue("data-param3", out string? value) && value.Contains(Constants.MemorySkillUnlockUpText))
                     {
-                        var link = Constants.DomainUrl + memoryData["link"] + Constants.MemoryPropertyPageSuffix;
-                        var propertyHtmlDoc = await GetHtmlDocumentFromUrl(link);
+                        var memory_link = Constants.DomainUrl + link + Constants.MemoryPropertyPageSuffix;
+                        var propertyHtmlDoc = await GetHtmlDocumentFromUrl(memory_link);
                         var skillUnlockRate = await GetSkillUnlockRate(propertyHtmlDoc);
                         Debug.Assert(!string.IsNullOrEmpty(skillUnlockRate), "技能解锁提升几率 should not be empty");
                         memoryData["skill_unlock_rate"] = skillUnlockRate;
@@ -250,6 +267,13 @@ namespace MarkMaster.Scripts
                     if (tdTags != null && tdTags.Count > 1)
                     {
                         npcData["npc_name"] = tdTags[1].InnerText.Trim();
+                    }
+
+                    // 存储第一个a标签的链接内容
+                    var link = GetFirstNonPngHref(item);
+                    if (!string.IsNullOrEmpty(link))
+                    {
+                        npcData["link"] = link;
                     }
 
                     // 存储img标签的alt内容和src

@@ -37,7 +37,7 @@
             // 
             // btnCrawler
             // 
-            btnCrawler.Location = new Point(47, 60);
+            btnCrawler.Location = new Point(68, 68);
             btnCrawler.Name = "btnCrawler";
             btnCrawler.Size = new Size(170, 68);
             btnCrawler.TabIndex = 0;
@@ -47,7 +47,7 @@
             // 
             // btnSkills
             // 
-            btnSkills.Location = new Point(47, 141);
+            btnSkills.Location = new Point(68, 151);
             btnSkills.Name = "btnSkills";
             btnSkills.Size = new Size(170, 68);
             btnSkills.TabIndex = 1;
@@ -58,7 +58,7 @@
             // lblLoadingStatus
             // 
             lblLoadingStatus.AutoSize = true;
-            lblLoadingStatus.Location = new Point(56, 27);
+            lblLoadingStatus.Location = new Point(12, 30);
             lblLoadingStatus.Name = "lblLoadingStatus";
             lblLoadingStatus.Size = new Size(104, 17);
             lblLoadingStatus.TabIndex = 2;
@@ -66,7 +66,7 @@
             // 
             // btnImport
             // 
-            btnImport.Location = new Point(47, 222);
+            btnImport.Location = new Point(68, 234);
             btnImport.Name = "btnImport";
             btnImport.Size = new Size(170, 68);
             btnImport.TabIndex = 3;
@@ -76,7 +76,7 @@
             // 
             // btnHelp
             // 
-            btnHelp.Location = new Point(47, 309);
+            btnHelp.Location = new Point(68, 317);
             btnHelp.Name = "btnHelp";
             btnHelp.Size = new Size(170, 68);
             btnHelp.TabIndex = 3;
@@ -88,7 +88,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(269, 410);
+            ClientSize = new Size(300, 411);
             Controls.Add(btnHelp);
             Controls.Add(btnImport);
             Controls.Add(lblLoadingStatus);

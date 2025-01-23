@@ -37,6 +37,10 @@ namespace MarkMaster
             {
                 picboxSkill.Image = image;
             }
+            else
+            {
+                picboxSkill.Image = Resources.DefaultSkill;
+            }
 
             lblSkillLevel.Text = _skill.Level.ToString();
             lblSkillLevel.Visible = _skill.Level > 0;

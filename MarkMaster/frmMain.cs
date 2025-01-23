@@ -14,7 +14,8 @@ namespace MarkMaster
             var crawler = new Scripts.Crawler();
             crawler.OnProgressChanged += UpdateProgress;
             await Task.Run(crawler.StartCrawl);
-            UpdateProgress("资源下载完成！");
+            bool isDataLoaded = GlobalData.Instance.LoadData();
+            UpdateProgress(isDataLoaded ? "资源下载完成！本地数据加载成功！" : "资源下载完成，但加载仍然失败");
         }
 
         private void UpdateProgress(string message)
@@ -50,7 +51,7 @@ namespace MarkMaster
         private void btnHelp_Click(object sender, EventArgs e)
         {
             string helpMessage = "MarkMaster 功能说明：\n\n" +
-                                 "1. 启动爬虫：点击主界面的“更新技能烙痕资源”按钮，系统将依次抓取技能、记忆烙痕和角色数据，并下载相关图片资源。\n" +
+                                 "1. 启动爬虫：点击主界面的“更新技能烙痕资源”按钮，系统将依次抓取技能、记忆烙痕和角色数据，并下载相关图片资源。大约需要25秒。（爬虫写得不是很健壮，随时可能会返工）\n" +
                                  "2. 查看技能：点击“传承技能一览”按钮，打开技能查看界面。\n" +
                                  "   - 鼠标悬停：展示技能所属的烙痕和相关队长技。加粗的烙痕为拥有“技能解锁提升”效果的烙痕，右侧的数值为它的概率。\n" +
                                  "   - 技能筛选：支持按技能类型、等级和名称进行筛选。\n" +
