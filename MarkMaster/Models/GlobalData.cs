@@ -47,7 +47,7 @@ namespace MarkMaster.Models
 
         public bool LoadUserData()
         {
-            var filePath = Tools.GetAbsolutePath($"{Constants.ResourcesDirectory}{Constants.UserDataFileName}");
+            var filePath = Tools.GetAbsolutePath($"{Constants.UserDataFileName}");
             if (File.Exists(filePath))
             {
                 var json = File.ReadAllText(filePath);
@@ -71,7 +71,7 @@ namespace MarkMaster.Models
                                  .ToDictionary(skill => skill.SkillName, skill => skill.Level);
 
             var json = JsonConvert.SerializeObject(userData, Formatting.Indented);
-            var filePath = Tools.GetAbsolutePath($"{Constants.ResourcesDirectory}{Constants.UserDataFileName}");
+            var filePath = Tools.GetAbsolutePath($"{Constants.UserDataFileName}");
             File.WriteAllText(filePath, json);
 
             return true;
@@ -79,7 +79,7 @@ namespace MarkMaster.Models
 
         public void LoadSkillFlags()
         {
-            var filePath = Tools.GetAbsolutePath($"{Constants.ResourcesDirectory}{Constants.SkillFlagsFileName}");
+            var filePath = Tools.GetAbsolutePath($"{Constants.SkillFlagsFileName}");
             if (File.Exists(filePath))
             {
                 var json = File.ReadAllText(filePath);
@@ -101,7 +101,7 @@ namespace MarkMaster.Models
                                    .ToDictionary(skill => skill.SkillName, skill => skill.Flag);
 
             var json = JsonConvert.SerializeObject(skillFlags, Formatting.Indented);
-            var filePath = Tools.GetAbsolutePath($"{Constants.ResourcesDirectory}{Constants.SkillFlagsFileName}");
+            var filePath = Tools.GetAbsolutePath($"{Constants.SkillFlagsFileName}");
             File.WriteAllText(filePath, json);
         }
 

@@ -32,7 +32,7 @@
             btnSkills = new Button();
             lblLoadingStatus = new Label();
             btnImport = new Button();
-            lblProgress = new Label();
+            btnHelp = new Button();
             SuspendLayout();
             // 
             // btnCrawler
@@ -74,20 +74,22 @@
             btnImport.UseVisualStyleBackColor = true;
             btnImport.Click += btnImport_Click;
             // 
-            // lblProgress
+            // btnHelp
             // 
-            lblProgress.AutoSize = true;
-            lblProgress.Location = new Point(56, 309);
-            lblProgress.Name = "lblProgress";
-            lblProgress.Size = new Size(0, 17);
-            lblProgress.TabIndex = 4;
+            btnHelp.Location = new Point(47, 309);
+            btnHelp.Name = "btnHelp";
+            btnHelp.Size = new Size(170, 68);
+            btnHelp.TabIndex = 3;
+            btnHelp.Text = "帮助(&H)";
+            btnHelp.UseVisualStyleBackColor = true;
+            btnHelp.Click += btnHelp_Click;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(269, 353);
-            Controls.Add(lblProgress);
+            ClientSize = new Size(269, 410);
+            Controls.Add(btnHelp);
             Controls.Add(btnImport);
             Controls.Add(lblLoadingStatus);
             Controls.Add(btnSkills);
@@ -107,6 +109,6 @@
         private Button btnSkills;
         private Label lblLoadingStatus;
         private Button btnImport;
-        private Label lblProgress;
+        private Button btnHelp;
     }
 }
