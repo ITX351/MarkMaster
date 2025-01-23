@@ -223,6 +223,14 @@ namespace MarkMaster.Models
                     }
                 }
             }
+
+            foreach (var skill in Skills)
+            {
+                skill.Memories = skill.Memories
+                    .OrderByDescending(m => m.SkillUnlockRate)
+                    .ThenByDescending(m => m.DataParams[1] == "SSR" ? 3 : m.DataParams[1] == "SR" ? 2 : 1)
+                    .ToList();
+            }
         }
 
         private void PreloadImages()

@@ -42,4 +42,4 @@ ITX351
 
 ## 致谢
 
-特别感谢 GitHub Copilot 对本项目开发的帮助。
+感谢 GitHub Copilot 对本项目开发的帮助。感谢小悖以协助测试。

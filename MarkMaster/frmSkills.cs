@@ -29,6 +29,7 @@ namespace MarkMaster
             Color.LightPink,   // 5 Shift左
             Color.DarkGray     // 6 Shift右
         };
+        private bool isLoaded = false; // 添加标记变量
 
         public frmSkills()
         {
@@ -64,6 +65,7 @@ namespace MarkMaster
             }
             btnSkillTypeChoose_Click(btnSkillAll, EventArgs.Empty, 0);
             ReloadAndLayoutSkills();
+            isLoaded = true; // 在 Load 事件结束时设置标记
         }
 
         private void SkillControl_MouseEnter(object sender, EventArgs e, usrctlSkillDetails skillDetailsControl)
@@ -171,6 +173,7 @@ namespace MarkMaster
 
         private void frmSkills_Resize(object sender, EventArgs e)
         {
+            if (!isLoaded) return; // 检查标记
             ReloadAndLayoutSkills();
             AdjustButtonPositions();
         }

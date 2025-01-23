@@ -11,11 +11,13 @@ namespace MarkMaster
 
         private async void btnCrawler_Click(object sender, EventArgs e)
         {
+            btnCrawler.Enabled = false;
             var crawler = new Scripts.Crawler();
             crawler.OnProgressChanged += UpdateProgress;
             await Task.Run(crawler.StartCrawl);
             bool isDataLoaded = GlobalData.Instance.LoadData();
             UpdateProgress(isDataLoaded ? "资源下载完成！本地数据加载成功！" : "资源下载完成，但加载仍然失败");
+            btnCrawler.Enabled = true;
         }
 
         private void UpdateProgress(string message)
