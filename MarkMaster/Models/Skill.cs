@@ -76,5 +76,26 @@ namespace MarkMaster.Models
             NewLevel = level;
             LevelChanged?.Invoke();
         }
+
+        private static string NormalizeSkillName(string skillName)
+        {
+            return skillName.Replace(" ", "").Replace("\t", "").Replace("·", "").Replace("型", "")
+                .Replace("α", "alpha").Replace("β", "beta").Replace("alpha", "a").Replace("beta", "b").ToLower();
+        }
+
+        public static bool AreSkillNamesEqual(string skillName1, string skillName2)
+        {
+            return NormalizeSkillName(skillName1) == NormalizeSkillName(skillName2);
+        }
+
+        public bool IsSkillNameEqual(string otherSkillName)
+        {
+            return NormalizeSkillName(this.SkillName) == NormalizeSkillName(otherSkillName);
+        }
+
+        public bool DoesSkillNameContain(string otherSkillName)
+        {
+            return string.IsNullOrEmpty(otherSkillName) || NormalizeSkillName(this.SkillName).Contains(NormalizeSkillName(otherSkillName));
+        }
     }
 }

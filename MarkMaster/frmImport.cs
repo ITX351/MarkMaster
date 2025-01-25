@@ -23,16 +23,6 @@ namespace MarkMaster
             Close();
         }
 
-        private string NormalizeSkillName(string skillName)
-        {
-            return skillName.Replace("·", "").Replace("型", "").Replace("α", "alpha").Replace("β", "beta").Replace(" ", "").Replace("\t", "").ToLower();
-        }
-
-        public bool AreSkillNamesEqual(string skillName1, string skillName2)
-        {
-            return NormalizeSkillName(skillName1) == NormalizeSkillName(skillName2);
-        }
-
         private void btnImport_Click(object sender, EventArgs e)
         {
             var skillNames = rchtxtSkillNames.Lines;
@@ -51,7 +41,7 @@ namespace MarkMaster
                     level = parsedLevel;
                 }
 
-                var skill = GlobalData.Instance.Skills.FirstOrDefault(s => AreSkillNamesEqual(s.SkillName, skillName));
+                var skill = GlobalData.Instance.Skills.FirstOrDefault(s => s.IsSkillNameEqual(skillName));
                 if (skill != null)
                 {
                     skill.SetLevel(level);

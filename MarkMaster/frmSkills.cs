@@ -191,6 +191,9 @@ namespace MarkMaster
             int y = btnSkillAll.Bottom + margin; // 从按钮下方开始布局
 
             int controlCount = 0; // 计数器
+            lnklblShowAll.Visible = false;
+            bool lnklblShowAllShown = false;
+
             foreach (var skillControl in skillControls)
             {
                 var skill = skillControl.Skill;
@@ -198,7 +201,8 @@ namespace MarkMaster
                 int cboSkillUpperTypeFilterIndex = cboSkillUpperTypeFilter.SelectedIndex > 2 ? 2 : cboSkillUpperTypeFilter.SelectedIndex;
                 bool thisVisible = (nowType == 0 || nowType == skillType) &&
                     (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level || (cboSkillLevelFilter.SelectedIndex == 5 && skill.Level >= 1 && skill.Level <= 2)) &&
-                    (string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
+                    //(string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
+                    skill.DoesSkillNameContain(txtSearch.Text);
                 thisVisible = thisVisible &&
                     (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilterIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
                     (cboSkillUpperTypeFilter.SelectedIndex < 2 ||
@@ -207,22 +211,29 @@ namespace MarkMaster
                     (cboSkillUpperTypeFilter.SelectedIndex == 4 && skill.Memories.Count > 0 && skill.NPCs.Count == 0) ||
                     (cboSkillUpperTypeFilter.SelectedIndex == 5 && skill.Memories.Count == 0 && skill.NPCs.Count == 0));
 
+                skillControl.Visible = false;
                 if (thisVisible)
                 {
                     controlCount++;
                     if (!ShowingAll && controlCount > controlsPerRow * 9)
                     {
-                        lnklblShowAll.Location = new Point(x, y);
-                        lnklblShowAll.Visible = true;
-                        break;
+                        if (!lnklblShowAllShown)
+                        {
+                            lnklblShowAllShown = true;
+                            lnklblShowAll.Location = new Point(x, y);
+                            lnklblShowAll.Visible = true;
+                        }
                     }
-                    skillControl.Visible = true;
-                    skillControl.Location = new Point(x, y);
-                    x += controlWidth + margin;
-                    if (x + controlWidth + margin > formWidth)
+                    else
                     {
-                        x = margin;
-                        y += controlHeight + margin;
+                        skillControl.Visible = true;
+                        skillControl.Location = new Point(x, y);
+                        x += controlWidth + margin;
+                        if (x + controlWidth + margin > formWidth)
+                        {
+                            x = margin;
+                            y += controlHeight + margin;
+                        }
                     }
                 }
             }
