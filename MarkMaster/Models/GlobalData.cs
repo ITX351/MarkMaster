@@ -120,10 +120,10 @@ namespace MarkMaster.Models
                     var skill = new Skill
                     {
                         Id = id++,
-                        Link = dict.GetValueOrDefault("link"),
-                        ImgSkillRarity = dict.GetValueOrDefault("img_alt_56"),
-                        ImgSkillPic = dict.GetValueOrDefault("img_alt_128"),
-                        SkillName = dict.GetValueOrDefault("skill_name"),
+                        Link = dict.GetValueOrDefault("link")!,
+                        ImgSkillRarity = dict.GetValueOrDefault("img_alt_56")!,
+                        ImgSkillPic = dict.GetValueOrDefault("img_alt_128")!,
+                        SkillName = dict.GetValueOrDefault("skill_name")!,
                         DataParams = dict.Where(kvp => kvp.Key.StartsWith("data-param"))
                                          .Select(kvp => kvp.Value)
                                          .ToArray()
@@ -145,19 +145,19 @@ namespace MarkMaster.Models
                 var memories = new List<Memory>();
 
                 int id = 1;
-                foreach (var dict in memoryDictionaries)
+                foreach (var dict in memoryDictionaries!)
                 {
                     var memory = new Memory
                     {
                         Id = id++,
-                        Link = dict.GetValueOrDefault("link"),
-                        MemoryName = dict.GetValueOrDefault("memory_name"),
+                        Link = dict.GetValueOrDefault("link")!,
+                        MemoryName = dict.GetValueOrDefault("memory_name")!,
                         DataParams = dict.Where(kvp => kvp.Key.StartsWith("data-param"))
                                          .Select(kvp => kvp.Value)
                                          .ToArray(),
-                        ImgMemoryPic = dict.GetValueOrDefault("img_alt_192"),
-                        ImgMemoryType = dict.GetValueOrDefault("img_alt_44"),
-                        ImgMemoryRarity = dict.GetValueOrDefault("img_alt_105"),
+                        ImgMemoryPic = dict.GetValueOrDefault("img_alt_192")!,
+                        ImgMemoryType = dict.GetValueOrDefault("img_alt_44")!,
+                        ImgMemoryRarity = dict.GetValueOrDefault("img_alt_105")!,
                         SkillNames = dict.GetValueOrDefault("skill_names")?.Split(", ").ToList() ?? [],
                         SkillUnlockRate = int.TryParse(dict.GetValueOrDefault("skill_unlock_rate"), out int rate) ? rate : 0
                     };
@@ -183,12 +183,12 @@ namespace MarkMaster.Models
                     var npc = new NPC
                     {
                         Id = id++,
-                        Link = dict.GetValueOrDefault("link"),
-                        NPCName = dict.GetValueOrDefault("npc_name"),
+                        Link = dict.GetValueOrDefault("link")!,
+                        NPCName = dict.GetValueOrDefault("npc_name")!,
                         DataParams = dict.Where(kvp => kvp.Key.StartsWith("data-param"))
                                          .Select(kvp => kvp.Value)
                                          .ToArray(),
-                        ImgNPCPic = dict.GetValueOrDefault("img_alt_96"),
+                        ImgNPCPic = dict.GetValueOrDefault("img_alt_96")!,
                         SkillNames = dict.GetValueOrDefault("skill_names")?.Split(", ").ToList() ?? []
                     };
                     npcs.Add(npc);
@@ -266,7 +266,7 @@ namespace MarkMaster.Models
             // }
         }
 
-        public Image GetPreloadedImage(string key)
+        public Image? GetPreloadedImage(string key)
         {
             if (_preloadedImages.TryGetValue(key, out var image))
             {
