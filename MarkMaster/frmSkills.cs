@@ -184,8 +184,9 @@ namespace MarkMaster
 
         private void ReloadSkills()
         {
-            int controlWidth = 177; // usrctlSkill控件的宽度
-            int controlHeight = 37; // usrctlSkill控件的高度
+            if (skillControls.Count == 0) return;
+            int controlWidth = skillControls[0].Width; // usrctlSkill控件的宽度
+            int controlHeight = skillControls[0].Height; // usrctlSkill控件的高度
             int margin = 10; // 控件之间的间隔
             int formWidth = this.ClientSize.Width; // 当前窗体的宽度
             int controlsPerRow = formWidth / (controlWidth + margin); // 每行显示的控件数量
@@ -348,8 +349,13 @@ namespace MarkMaster
 
         private void UpdateSkillMemoryLayout()
         {
-            int controlWidth = 177; // 控件的宽度
-            int controlHeight = 37; // 控件的高度
+            if (selectedSkills.Count == 0)
+            {
+                lblSeparator.Visible = false;
+                return;
+            }
+            int controlWidth = skillControls[0].Width; // 控件的宽度
+            int controlHeight = skillControls[0].Height; // 控件的高度
             int margin = 10; // 控件之间的间隔
             int formWidth = this.ClientSize.Width; // 当前窗体的宽度
 
