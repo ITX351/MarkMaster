@@ -8,7 +8,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Authors>ITX351</Authors>
     <RepositoryUrl>https://github.com/ITX351/MarkMaster/</RepositoryUrl>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
