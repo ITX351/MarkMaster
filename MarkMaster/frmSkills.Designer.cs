@@ -40,6 +40,7 @@
             btnRestore = new Button();
             btnStartEditing = new Button();
             lblSeparator = new Label();
+            lnklblShowAll = new LinkLabel();
             SuspendLayout();
             // 
             // btnSkillType3
@@ -163,11 +164,24 @@
             lblSeparator.TabIndex = 9;
             lblSeparator.Visible = false;
             // 
+            // lnklblShowAll
+            // 
+            lnklblShowAll.AutoSize = true;
+            lnklblShowAll.Location = new Point(851, 374);
+            lnklblShowAll.Name = "lnklblShowAll";
+            lnklblShowAll.Size = new Size(65, 17);
+            lnklblShowAll.TabIndex = 10;
+            lnklblShowAll.TabStop = true;
+            lnklblShowAll.Text = "显示全部...";
+            lnklblShowAll.Visible = false;
+            lnklblShowAll.LinkClicked += lnklblShowAll_LinkClicked;
+            // 
             // frmSkills
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(991, 801);
+            Controls.Add(lnklblShowAll);
             Controls.Add(lblSeparator);
             Controls.Add(txtSearch);
             Controls.Add(cboSkillLevelFilter);
@@ -203,5 +217,6 @@
         private Button btnRestore;
         private Button btnStartEditing;
         private Label lblSeparator;
+        private LinkLabel lnklblShowAll;
     }
 }

@@ -29,7 +29,8 @@ namespace MarkMaster
             Color.LightPink,   // 5 Shift左
             Color.DarkGray     // 6 Shift右
         };
-        private bool isLoaded = false; // 添加标记变量
+        private bool isLoaded = false;
+        private bool ShowingAll = false;
 
         public frmSkills()
         {
@@ -64,7 +65,7 @@ namespace MarkMaster
                 skillControl.BackColor = GetFlagColor(skill.Flag);
             }
             btnSkillTypeChoose_Click(btnSkillAll, EventArgs.Empty, 0);
-            ReloadAndLayoutSkills();
+            //ReloadAndLayoutSkills();
             isLoaded = true; // 在 Load 事件结束时设置标记
         }
 
@@ -189,24 +190,33 @@ namespace MarkMaster
             int x = margin;
             int y = btnSkillAll.Bottom + margin; // 从按钮下方开始布局
 
+            int controlCount = 0; // 计数器
             foreach (var skillControl in skillControls)
             {
                 var skill = skillControl.Skill;
                 int skillType = skill.GetSkillTypeValue();
                 int cboSkillUpperTypeFilterIndex = cboSkillUpperTypeFilter.SelectedIndex > 2 ? 2 : cboSkillUpperTypeFilter.SelectedIndex;
-                skillControl.Visible = (nowType == 0 || nowType == skillType) &&
+                bool thisVisible = (nowType == 0 || nowType == skillType) &&
                     (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level || (cboSkillLevelFilter.SelectedIndex == 5 && skill.Level >= 1 && skill.Level <= 2)) &&
                     (string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
-                skillControl.Visible = skillControl.Visible && 
+                thisVisible = thisVisible &&
                     (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilterIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
-                    (cboSkillUpperTypeFilter.SelectedIndex < 2 || 
-                    (cboSkillUpperTypeFilter.SelectedIndex == 2 && (skill.Memories.Count > 0 || skill.NPCs.Count > 0)) || 
-                    (cboSkillUpperTypeFilter.SelectedIndex == 3 && skill.NPCs.Count > 0) || 
-                    (cboSkillUpperTypeFilter.SelectedIndex == 4 && skill.Memories.Count > 0 && skill.NPCs.Count == 0) || 
+                    (cboSkillUpperTypeFilter.SelectedIndex < 2 ||
+                    (cboSkillUpperTypeFilter.SelectedIndex == 2 && (skill.Memories.Count > 0 || skill.NPCs.Count > 0)) ||
+                    (cboSkillUpperTypeFilter.SelectedIndex == 3 && skill.NPCs.Count > 0) ||
+                    (cboSkillUpperTypeFilter.SelectedIndex == 4 && skill.Memories.Count > 0 && skill.NPCs.Count == 0) ||
                     (cboSkillUpperTypeFilter.SelectedIndex == 5 && skill.Memories.Count == 0 && skill.NPCs.Count == 0));
 
-                if (skillControl.Visible)
+                if (thisVisible)
                 {
+                    controlCount++;
+                    if (!ShowingAll && controlCount > controlsPerRow * 9)
+                    {
+                        lnklblShowAll.Location = new Point(x, y);
+                        lnklblShowAll.Visible = true;
+                        break;
+                    }
+                    skillControl.Visible = true;
                     skillControl.Location = new Point(x, y);
                     x += controlWidth + margin;
                     if (x + controlWidth + margin > formWidth)
@@ -362,7 +372,7 @@ namespace MarkMaster
                     if (memoryControls == null)
                     {
                         memoryControls = new List<Control>();
-                        var newSkillControl = new usrctlSkill(skill) { Tag = skill };
+                        var newSkillControl = new usrctlSkill(skill) { Tag = skill, Visible = true };
                         newSkillControl.MouseClick += NewSkillControl_MouseClick; // 添加右键单击事件
                         memoryControls.Add(newSkillControl);
                         this.Controls.Add(newSkillControl);
@@ -445,6 +455,13 @@ namespace MarkMaster
         private void frmSkills_FormClosing(object sender, FormClosingEventArgs e)
         {
             GlobalData.Instance.SaveSkillFlags();
+        }
+
+        private void lnklblShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            lnklblShowAll.Visible = false;
+            ShowingAll = true;
+            ReloadAndLayoutSkills();
         }
     }
 }

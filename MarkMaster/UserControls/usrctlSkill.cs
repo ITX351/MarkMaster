@@ -21,6 +21,7 @@ namespace MarkMaster
             InitializeComponent();
             _skill = skill;
             _skill.LevelChanged += RefreshSkillLevelColor;
+            this.Visible = false;
         }
 
         public Skill Skill
