@@ -102,7 +102,7 @@
             cboSkillUpperTypeFilter.Name = "cboSkillUpperTypeFilter";
             cboSkillUpperTypeFilter.Size = new Size(101, 25);
             cboSkillUpperTypeFilter.TabIndex = 1;
-            cboSkillUpperTypeFilter.SelectedIndexChanged += cboSkillUpperTypeFilter_SelectedIndexChanged;
+            cboSkillUpperTypeFilter.SelectedIndexChanged += FilterChanged;
             // 
             // cboSkillLevelFilter
             // 
@@ -113,7 +113,7 @@
             cboSkillLevelFilter.Name = "cboSkillLevelFilter";
             cboSkillLevelFilter.Size = new Size(59, 25);
             cboSkillLevelFilter.TabIndex = 2;
-            cboSkillLevelFilter.SelectedIndexChanged += cboSkillLevelFilter_SelectedIndexChanged;
+            cboSkillLevelFilter.SelectedIndexChanged += FilterChanged;
             // 
             // txtSearch
             // 
@@ -121,7 +121,7 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(138, 23);
             txtSearch.TabIndex = 3;
-            txtSearch.TextChanged += txtSearch_TextChanged;
+            txtSearch.TextChanged += FilterChanged;
             // 
             // btnSave
             // 

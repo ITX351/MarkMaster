@@ -31,23 +31,26 @@ namespace MarkMaster
         };
         private bool isLoaded = false;
         private bool ShowingAll = false;
+        private readonly List<Button> skillTypeButtons;
 
         public frmSkills()
         {
             InitializeComponent();
             skillControls = new List<usrctlSkill>();
             selectedSkills = new List<Skill>();
+
+            skillTypeButtons = new List<Button> { btnSkillAll, btnSkillType1, btnSkillType2, btnSkillType3, btnSkillType4 };
+            for (int i = 0; i < skillTypeButtons.Count; i++)
+            {
+                int type = i; // 需要一个局部变量来捕获当前的i值
+                skillTypeButtons[i].Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, type);
+            }
         }
 
         private void frmSkills_Load(object sender, EventArgs e)
         {
             cboSkillUpperTypeFilter.SelectedIndex = 2;
             cboSkillLevelFilter.SelectedIndex = 0;
-            btnSkillType1.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 1);
-            btnSkillType2.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 2);
-            btnSkillType3.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 3);
-            btnSkillType4.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 4);
-            btnSkillAll.Click += (s, ev) => btnSkillTypeChoose_Click(s, ev, 0);
 
             foreach (var skill in GlobalData.Instance.Skills)
             {
@@ -271,23 +274,7 @@ namespace MarkMaster
             }
         }
 
-        private void cboSkillUpperTypeFilter_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (skillControls.Count > 0)
-            {
-                ReloadAndLayoutSkills();
-            }
-        }
-
-        private void cboSkillLevelFilter_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (skillControls.Count > 0)
-            {
-                ReloadAndLayoutSkills();
-            }
-        }
-
-        private void txtSearch_TextChanged(object sender, EventArgs e)
+        private void FilterChanged(object sender, EventArgs e)
         {
             if (skillControls.Count > 0)
             {
@@ -355,6 +342,8 @@ namespace MarkMaster
             btnStartEditing.Visible = !newStatus;
             btnSave.Visible = newStatus;
             btnRestore.Visible = newStatus;
+
+            skillTypeButtons[nowType].Focus();
         }
 
         private void UpdateSkillMemoryLayout()
