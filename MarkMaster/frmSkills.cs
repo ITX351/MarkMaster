@@ -204,7 +204,8 @@ namespace MarkMaster
                 int skillType = skill.GetSkillTypeValue();
                 int cboSkillUpperTypeFilterIndex = cboSkillUpperTypeFilter.SelectedIndex > 2 ? 2 : cboSkillUpperTypeFilter.SelectedIndex;
                 bool thisVisible = (nowType == 0 || nowType == skillType) &&
-                    (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level || (cboSkillLevelFilter.SelectedIndex == 5 && skill.Level >= 1 && skill.Level <= 2)) &&
+                    (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level || 
+                    (cboSkillLevelFilter.SelectedIndex == 5 && skill.Level >= 0 && skill.Level <= 2)) &&
                     //(string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
                     skill.DoesSkillNameContain(txtSearch.Text);
                 thisVisible = thisVisible &&
