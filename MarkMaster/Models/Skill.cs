@@ -97,5 +97,12 @@ namespace MarkMaster.Models
         {
             return string.IsNullOrEmpty(otherSkillName) || NormalizeSkillName(this.SkillName).Contains(NormalizeSkillName(otherSkillName));
         }
+
+        public bool MatchesSearchTerm(string searchTerm)
+        {
+            return DoesSkillNameContain(searchTerm) ||
+                   Memories.Any(memory => memory.MemoryName.Contains(searchTerm)) ||
+                   NPCs.Any(npc => npc.NPCName.Contains(searchTerm));
+        }
     }
 }

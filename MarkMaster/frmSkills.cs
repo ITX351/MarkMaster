@@ -207,7 +207,8 @@ namespace MarkMaster
                     (cboSkillLevelFilter.SelectedIndex == 0 || cboSkillLevelFilter.SelectedIndex - 1 == skill.Level || 
                     (cboSkillLevelFilter.SelectedIndex == 5 && skill.Level >= 0 && skill.Level <= 2)) &&
                     //(string.IsNullOrEmpty(txtSearch.Text) || skill.SkillName.Contains(txtSearch.Text) || skill.SkillDesc.Contains(txtSearch.Text));
-                    skill.DoesSkillNameContain(txtSearch.Text);
+                    //skill.DoesSkillNameContain(txtSearch.Text);
+                    skill.MatchesSearchTerm(txtSearch.Text);
                 thisVisible = thisVisible &&
                     (cboSkillUpperTypeFilter.SelectedIndex == 0 || cboSkillUpperTypeFilter.Items[cboSkillUpperTypeFilterIndex]?.ToString() == skill.GetSkillUpperTypeValue()) &&
                     (cboSkillUpperTypeFilter.SelectedIndex < 2 ||
