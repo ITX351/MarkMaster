@@ -150,6 +150,7 @@ namespace MarkMaster
                             skillControl.BorderStyle = BorderStyle.Fixed3D;
                         }
                         UpdateSkillMemoryLayout();
+                        UpdateSelectedSkillsCount();
                     }
                     else
                     {
@@ -316,27 +317,33 @@ namespace MarkMaster
         {
             if (!isEditing)
             {
-                foreach (var skill in selectedSkills)
-                {
-                    var memoryControls = skillMemoryControls.FirstOrDefault(mc => mc.First().Tag == skill);
-                    if (memoryControls != null)
-                    {
-                        foreach (var control in memoryControls)
-                        {
-                            this.Controls.Remove(control);
-                            control.Dispose();
-                        }
-                        skillMemoryControls.Remove(memoryControls);
-                    }
-                }
-                selectedSkills.Clear();
-                foreach (var skillControl in skillControls)
-                {
-                    skillControl.BorderStyle = BorderStyle.None;
-                    //skillControl.Font = new Font(skillControl.Font, FontStyle.Regular);
-                }
+                ClearSelectedSkills();
                 switchEditingStatus(true);
             }
+        }
+
+        private void ClearSelectedSkills()
+        {
+            foreach (var skill in selectedSkills)
+            {
+                var memoryControls = skillMemoryControls.FirstOrDefault(mc => mc.First().Tag == skill);
+                if (memoryControls != null)
+                {
+                    foreach (var control in memoryControls)
+                    {
+                        this.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                    skillMemoryControls.Remove(memoryControls);
+                }
+            }
+            selectedSkills.Clear();
+            foreach (var skillControl in skillControls)
+            {
+                skillControl.BorderStyle = BorderStyle.None;
+                //skillControl.Font = new Font(skillControl.Font, FontStyle.Regular);
+            }
+            UpdateSelectedSkillsCount();
         }
 
         private void switchEditingStatus(bool newStatus)
@@ -351,11 +358,6 @@ namespace MarkMaster
 
         private void UpdateSkillMemoryLayout()
         {
-            if (selectedSkills.Count == 0)
-            {
-                lblSeparator.Visible = false;
-                return;
-            }
             int controlWidth = skillControls[0].Width; // 控件的宽度
             int controlHeight = skillControls[0].Height; // 控件的高度
             int margin = 10; // 控件之间的间隔
@@ -370,6 +372,18 @@ namespace MarkMaster
             lblSeparator.Location = new Point(margin, y);
             lblSeparator.Visible = true;
             y += lblSeparator.Height + margin;
+
+            // 更新Label和Button的位置
+            const int ExtraHeight = 60;
+            lblSelectedSkillsCount.Location = new Point(margin, y + ExtraHeight);
+            btnClearSelectedSkills.Location = new Point(margin, y + ExtraHeight + lblSelectedSkillsCount.Height + margin);
+            y += lblSelectedSkillsCount.Height + btnClearSelectedSkills.Height + 2 * margin;
+
+            if (selectedSkills.Count == 0)
+            {
+                //lblSeparator.Visible = false;
+                return;
+            }
 
             foreach (var skill in selectedSkills)
             {
@@ -455,6 +469,7 @@ namespace MarkMaster
                             skillMemoryControls.Remove(memoryControls);
                         }
                         UpdateSkillMemoryLayout();
+                        UpdateSelectedSkillsCount();
                     }
                 }
             }
@@ -486,6 +501,17 @@ namespace MarkMaster
             lnklblShowAll.Visible = false;
             ShowingAll = true;
             ReloadAndLayoutSkills();
+        }
+
+        private void BtnClearSelectedSkills_Click(object sender, EventArgs e)
+        {
+            ClearSelectedSkills();
+            UpdateSelectedSkillsCount();
+        }
+
+        private void UpdateSelectedSkillsCount()
+        {
+            lblSelectedSkillsCount.Text = $"已选择技能: {selectedSkills.Count}";
         }
     }
 }

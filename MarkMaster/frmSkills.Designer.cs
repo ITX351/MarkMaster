@@ -41,6 +41,8 @@
             btnStartEditing = new Button();
             lblSeparator = new Label();
             lnklblShowAll = new LinkLabel();
+            lblSelectedSkillsCount = new Label();
+            btnClearSelectedSkills = new Button();
             SuspendLayout();
             // 
             // btnSkillType3
@@ -176,6 +178,25 @@
             lnklblShowAll.Visible = false;
             lnklblShowAll.LinkClicked += lnklblShowAll_LinkClicked;
             // 
+            // lblSelectedSkillsCount
+            // 
+            lblSelectedSkillsCount.AutoSize = true;
+            lblSelectedSkillsCount.Location = new Point(10, 10);
+            lblSelectedSkillsCount.Name = "lblSelectedSkillsCount";
+            lblSelectedSkillsCount.Size = new Size(100, 23);
+            lblSelectedSkillsCount.TabIndex = 11;
+            lblSelectedSkillsCount.Text = "已选择技能: 0";
+            // 
+            // btnClearSelectedSkills
+            // 
+            btnClearSelectedSkills.Location = new Point(10, 40);
+            btnClearSelectedSkills.Name = "btnClearSelectedSkills";
+            btnClearSelectedSkills.Size = new Size(100, 23);
+            btnClearSelectedSkills.TabIndex = 12;
+            btnClearSelectedSkills.Text = "清空选择";
+            btnClearSelectedSkills.UseVisualStyleBackColor = true;
+            btnClearSelectedSkills.Click += BtnClearSelectedSkills_Click;
+            // 
             // frmSkills
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -194,6 +215,8 @@
             Controls.Add(btnSave);
             Controls.Add(btnSkillAll);
             Controls.Add(btnStartEditing);
+            Controls.Add(lblSelectedSkillsCount);
+            Controls.Add(btnClearSelectedSkills);
             Name = "frmSkills";
             Text = "传承技能一览";
             FormClosing += frmSkills_FormClosing;
@@ -218,5 +241,7 @@
         private Button btnStartEditing;
         private Label lblSeparator;
         private LinkLabel lnklblShowAll;
+        private Label lblSelectedSkillsCount;
+        private Button btnClearSelectedSkills;
     }
 }
