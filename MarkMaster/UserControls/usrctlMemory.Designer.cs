@@ -43,6 +43,7 @@
             picMemoryType.Size = new Size(26, 26);
             picMemoryType.TabIndex = 0;
             picMemoryType.TabStop = false;
+            picMemoryType.MouseClick += Control_MouseClick;
             // 
             // picMemoryRarity
             // 
@@ -51,6 +52,7 @@
             picMemoryRarity.Size = new Size(26, 26);
             picMemoryRarity.TabIndex = 0;
             picMemoryRarity.TabStop = false;
+            picMemoryRarity.MouseClick += Control_MouseClick;
             // 
             // lblMemoryName
             // 
@@ -60,6 +62,7 @@
             lblMemoryName.Size = new Size(56, 17);
             lblMemoryName.TabIndex = 1;
             lblMemoryName.Text = "烙痕名称";
+            lblMemoryName.MouseClick += Control_MouseClick;
             // 
             // lblSkillUnlockRate
             // 
@@ -70,6 +73,7 @@
             lblSkillUnlockRate.TabIndex = 2;
             lblSkillUnlockRate.Text = "X";
             lblSkillUnlockRate.Visible = false;
+            lblSkillUnlockRate.MouseClick += Control_MouseClick;
             // 
             // usrctlMemory
             // 

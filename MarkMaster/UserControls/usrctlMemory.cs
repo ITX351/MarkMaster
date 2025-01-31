@@ -74,5 +74,10 @@ namespace MarkMaster.UserControls
                     break;
             }
         }
+
+        private void Control_MouseClick(object sender, MouseEventArgs e)
+        {
+            OnMouseClick(e);
+        }
     }
 }

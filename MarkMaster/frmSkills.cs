@@ -388,6 +388,7 @@ namespace MarkMaster
                         foreach (var memory in skill.Memories)
                         {
                             var memoryControl = new usrctlMemory(memory) { Tag = skill };
+                            memoryControl.MouseClick += usrctlMemory_MouseClick; // 添加Click事件
                             memoryControls.Add(memoryControl);
                             this.Controls.Add(memoryControl);
                         }
@@ -399,6 +400,11 @@ namespace MarkMaster
                     {
                         control.Location = new Point(x, y);
                         y += controlHeight + margin;
+
+                        if (control is usrctlMemory memoryControl)
+                        {
+                            memoryControl.BackColor = memoryControl._memory.IsSelected ? Color.Khaki : Color.Transparent;
+                        }
                     }
                     x += controlWidth + margin; // 新的skill另起一列
                 }
@@ -451,6 +457,16 @@ namespace MarkMaster
                         UpdateSkillMemoryLayout();
                     }
                 }
+            }
+        }
+
+        private void usrctlMemory_MouseClick(object sender, EventArgs e)
+        {
+            var memoryControl = sender as usrctlMemory;
+            if (memoryControl != null)
+            {
+                memoryControl._memory.IsSelected = !memoryControl._memory.IsSelected;
+                UpdateSkillMemoryLayout(); // 调用UpdateSkillMemoryLayout
             }
         }
 

@@ -12,6 +12,7 @@ namespace MarkMaster.Models
         public string[] DataParams { get; set; }
         public List<Skill> Skills { get; set; }
         public int SkillUnlockRate { get; set; }
+        public bool IsSelected { get; set; }
 
         public Memory()
         {
@@ -19,6 +20,7 @@ namespace MarkMaster.Models
             DataParams = new string[0];
             Skills = new List<Skill>();
             SkillUnlockRate = 0;
+            IsSelected = false;
         }
     }
 }
