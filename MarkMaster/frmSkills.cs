@@ -36,6 +36,7 @@ namespace MarkMaster
         public frmSkills()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             skillControls = new List<usrctlSkill>();
             selectedSkills = new List<Skill>();
 

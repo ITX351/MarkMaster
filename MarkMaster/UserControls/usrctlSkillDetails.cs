@@ -19,6 +19,7 @@ namespace MarkMaster
         public usrctlSkillDetails(Skill skill)
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             _skill = skill;
         }
 

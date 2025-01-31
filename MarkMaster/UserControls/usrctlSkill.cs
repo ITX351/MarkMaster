@@ -19,6 +19,7 @@ namespace MarkMaster
         public usrctlSkill(Skill skill)
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             _skill = skill;
             _skill.LevelChanged += RefreshSkillLevelColor;
             this.Visible = false;

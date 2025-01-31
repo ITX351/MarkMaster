@@ -19,6 +19,7 @@ namespace MarkMaster.UserControls
         public usrctlNPC(NPC npc)
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             _npc = npc;
         }
 

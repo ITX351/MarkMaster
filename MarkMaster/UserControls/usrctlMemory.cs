@@ -18,6 +18,7 @@ namespace MarkMaster.UserControls
         public usrctlMemory(Memory memory)
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             _memory = memory;
         }
 
