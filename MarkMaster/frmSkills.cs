@@ -496,6 +496,11 @@ namespace MarkMaster
             GlobalData.Instance.SaveSkillFlags();
         }
 
+        private void frmSkills_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
         private void lnklblShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             lnklblShowAll.Visible = false;

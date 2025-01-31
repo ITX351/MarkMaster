@@ -220,6 +220,7 @@
             Name = "frmSkills";
             Text = "传承技能一览";
             FormClosing += frmSkills_FormClosing;
+            FormClosed += frmSkills_FormClosed;
             Load += frmSkills_Load;
             Resize += frmSkills_Resize;
             ResumeLayout(false);

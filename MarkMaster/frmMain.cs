@@ -34,7 +34,8 @@ namespace MarkMaster
 
         private void btnSkills_Click(object sender, EventArgs e)
         {
-            var skillsForm = new frmSkills();
+            this.Hide();
+            frmSkills skillsForm = new();
             skillsForm.Show();
         }
 
