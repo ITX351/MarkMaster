@@ -45,6 +45,14 @@ namespace MarkMaster
 
             lblSkillLevel.Text = _skill.Level.ToString();
             lblSkillLevel.Visible = _skill.Level > 0;
+
+            if (_skill.NPCs.Count > 0)
+            {
+                lblNPCNames.Visible = true;
+                lblNPCNames.Text = string.Join("/", _skill.NPCs.Select(npc => npc.NPCName[0]));
+                //lblNPCNames.Left = this.Width - lblNPCNames.Width - 4; // 确保右对齐
+                lblNPCNames.SendToBack(); // 设置为最下层
+            }
         }
 
         private void Control_MouseEnter(object sender, EventArgs e)

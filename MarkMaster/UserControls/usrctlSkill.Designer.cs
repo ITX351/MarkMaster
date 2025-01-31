@@ -31,6 +31,7 @@
             picboxSkill = new PictureBox();
             lblSkillName = new Label();
             lblSkillLevel = new Label();
+            lblNPCNames = new Label();
             ((System.ComponentModel.ISupportInitialize)picboxSkill).BeginInit();
             SuspendLayout();
             // 
@@ -70,10 +71,24 @@
             lblSkillLevel.MouseEnter += Control_MouseEnter;
             lblSkillLevel.MouseLeave += Control_MouseLeave;
             // 
+            // lblNPCNames
+            // 
+            lblNPCNames.AutoSize = true;
+            lblNPCNames.ForeColor = Color.Gray;
+            lblNPCNames.Location = new Point(38, -2); // 调整位置到更靠上
+            lblNPCNames.Font = new Font("Microsoft YaHei UI", 7.25F, FontStyle.Regular, GraphicsUnit.Point, 134); // 进一步减小字体大小
+            lblNPCNames.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            lblNPCNames.TextAlign = ContentAlignment.TopLeft;
+            lblNPCNames.Name = "lblNPCNames";
+            lblNPCNames.Size = new Size(0, 17);
+            lblNPCNames.TabIndex = 3;
+            lblNPCNames.Visible = false;
+            // 
             // usrctlSkill
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lblNPCNames);
             Controls.Add(lblSkillLevel);
             Controls.Add(lblSkillName);
             Controls.Add(picboxSkill);
@@ -90,5 +105,6 @@
         private PictureBox picboxSkill;
         private Label lblSkillName;
         private Label lblSkillLevel;
+        private Label lblNPCNames;
     }
 }
