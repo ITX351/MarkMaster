@@ -377,7 +377,8 @@ namespace MarkMaster
             // 更新Label和Button的位置
             const int ExtraHeight = 60;
             lblSelectedSkillsCount.Location = new Point(margin, y + ExtraHeight);
-            btnClearSelectedSkills.Location = new Point(margin, y + ExtraHeight + lblSelectedSkillsCount.Height + margin);
+            lblSelectedMemoriesCount.Location = new Point(margin, y + ExtraHeight + lblSelectedSkillsCount.Height + margin);
+            btnClearSelectedSkills.Location = new Point(margin, y + ExtraHeight * 2 + lblSelectedMemoriesCount.Height + margin);
             y += lblSelectedSkillsCount.Height + btnClearSelectedSkills.Height + 2 * margin;
 
             if (selectedSkills.Count == 0)
@@ -483,6 +484,7 @@ namespace MarkMaster
             {
                 memoryControl._memory.IsSelected = !memoryControl._memory.IsSelected;
                 UpdateSkillMemoryLayout(); // 调用UpdateSkillMemoryLayout
+                UpdateSelectedMemoriesCount(); // 更新已选择烙痕计数
             }
         }
 
@@ -513,11 +515,38 @@ namespace MarkMaster
         {
             ClearSelectedSkills();
             UpdateSelectedSkillsCount();
+            ClearSelectedMemories(); // 清空已选择的烙痕
         }
 
         private void UpdateSelectedSkillsCount()
         {
             lblSelectedSkillsCount.Text = $"已选择技能: {selectedSkills.Count}";
+            UpdateSelectedMemoriesCount();
+        }
+
+        private void UpdateSelectedMemoriesCount()
+        {
+            int selectedMemoriesCount = selectedSkills
+                .SelectMany(skill => skill.Memories)
+                .Distinct()
+                .Count(memory => memory.IsSelected);
+            lblSelectedMemoriesCount.Text = $"已选择烙痕: {selectedMemoriesCount}";
+        }
+
+        private void ClearSelectedMemories()
+        {
+            // foreach (var skill in selectedSkills)
+            // {
+            //     foreach (var memory in skill.Memories)
+            //     {
+            //         memory.IsSelected = false;
+            //     }
+            // }
+            foreach (var memory in GlobalData.Instance.Memories)
+            {
+                memory.IsSelected = false;
+            }
+            UpdateSelectedMemoriesCount();
         }
     }
 }

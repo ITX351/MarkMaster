@@ -43,6 +43,7 @@
             lnklblShowAll = new LinkLabel();
             lblSelectedSkillsCount = new Label();
             btnClearSelectedSkills = new Button();
+            lblSelectedMemoriesCount = new Label();
             SuspendLayout();
             // 
             // btnSkillType3
@@ -189,13 +190,22 @@
             // 
             // btnClearSelectedSkills
             // 
-            btnClearSelectedSkills.Location = new Point(10, 40);
+            btnClearSelectedSkills.Location = new Point(10, 70);
             btnClearSelectedSkills.Name = "btnClearSelectedSkills";
             btnClearSelectedSkills.Size = new Size(100, 23);
             btnClearSelectedSkills.TabIndex = 12;
             btnClearSelectedSkills.Text = "清空选择";
             btnClearSelectedSkills.UseVisualStyleBackColor = true;
             btnClearSelectedSkills.Click += BtnClearSelectedSkills_Click;
+            // 
+            // lblSelectedMemoriesCount
+            // 
+            lblSelectedMemoriesCount.AutoSize = true;
+            lblSelectedMemoriesCount.Location = new Point(10, 40);
+            lblSelectedMemoriesCount.Name = "lblSelectedMemoriesCount";
+            lblSelectedMemoriesCount.Size = new Size(100, 23);
+            lblSelectedMemoriesCount.TabIndex = 13;
+            lblSelectedMemoriesCount.Text = "已选择烙痕: 0";
             // 
             // frmSkills
             // 
@@ -217,6 +227,7 @@
             Controls.Add(btnStartEditing);
             Controls.Add(lblSelectedSkillsCount);
             Controls.Add(btnClearSelectedSkills);
+            Controls.Add(lblSelectedMemoriesCount);
             Name = "frmSkills";
             Text = "传承技能一览";
             FormClosing += frmSkills_FormClosing;
@@ -244,5 +255,6 @@
         private LinkLabel lnklblShowAll;
         private Label lblSelectedSkillsCount;
         private Button btnClearSelectedSkills;
+        private Label lblSelectedMemoriesCount;
     }
 }
