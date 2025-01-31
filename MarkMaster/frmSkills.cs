@@ -410,7 +410,7 @@ namespace MarkMaster
                         skillMemoryControls.Add(memoryControls);
                     }
 
-                    y = lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom + margin : btnSkillAll.Bottom + margin; // 每个skill单独占据一列，从顶部开始布局
+                    y = (lastVisibleSkillControl != null ? lastVisibleSkillControl.Bottom : btnSkillAll.Bottom) + margin * 2; // 每个skill单独占据一列，从顶部开始布局
                     foreach (var control in memoryControls)
                     {
                         control.Location = new Point(x, y);
